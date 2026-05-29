@@ -20,8 +20,9 @@ function NavigationBar() {
                 navbarScroll
             >
                 <Nav.Link href="#action1" style={{ color: '#213145'}}>Dashboard</Nav.Link>
-                <Nav.Link href="#action2" style={{ color: '#213145'}}>Scheduling</Nav.Link>
-                <Nav.Link href="#" style={{ color: '#213145'}}>Link</Nav.Link>
+                <Nav.Link href="#action2" style={{ color: '#213145'}}>Schedule</Nav.Link>
+                <Nav.Link href="#" style={{ color: '#213145'}}>Resources</Nav.Link>
+                <Nav.Link href="#" style={{ color: '#213145'}}>Timetable</Nav.Link>
             </Nav>
             <Form className="d-flex position-relative">
                 <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>

@@ -5,7 +5,7 @@ function Home(){
         <>
             <div className="container-fluid hero d-flex align-items-center" style={{height: '100vh'}}>
                 <div className="row justify-content-between px-4">
-                    <div className="col-6">
+                    <div className="col-lg-6">
                         <div className="rounded-5 px-3 fw-bold" style={{width: 'fit-content', padding: '5px', backgroundColor: '#EDF0FF', color: '#0059ba'}}>
                             <i className="bi bi-battery-charging me-2"></i>
                             Next-Generation Academic Logic</div>
@@ -34,7 +34,7 @@ function Home(){
                     </div>
 
 
-                    <div className="col-5 rounded-4 shadow p-4" style={{color: '#213145'}}>
+                    <div className="col-lg-5 rounded-4 shadow p-4" style={{color: '#213145'}}>
                         <div className="d-flex justify-content-between align-items-center">
                             <h5 style={{color: '#213145'}}>Weekly Time Grid</h5>
                             <div className="d-flex gap-1">
@@ -51,7 +51,13 @@ function Home(){
                                 <h3>Math Hall</h3>
                                 <p>Statistical Methods . <span className="fw-bold">10:00 AM</span></p>
                             </div>
-                            <div className=""></div>
+                            <div className="rounded-4 p-4 mt-2" style={{backgroundColor: '#f8f9ff'}}>
+                                <div className="text-center" style={{backgroundColor: '#ac6300', width: '50px', padding: '5px 10px', borderRadius: '20px'}}>
+                                    <i className="bi bi-map text-white fs-5"></i>
+                                </div>
+                                <h3>Campus Map</h3>
+                                <p>Live occupancy tracking</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,6 +78,87 @@ function Home(){
                 <div className="text-center p-2" style={{width: '33.3%'}}>
                     <h5 className="display-4 fw-bold rounded-5" style={{color: '#0059ba'}}>12K</h5>
                     <p>Daily Bookings</p>
+                </div>
+            </div>
+            <div className="mx-5" style={{color: '#213145', width: '45%', marginTop: '150px'}}>
+                <h2 className="fw-bold">Designed for the Modern Academic Life</h2>
+                <p>We've removed the stress and friction of campus scheduling.
+                    No more overlapping bookings or missing classrooms. Optimizeed for real-time
+                    management of campus resources, providing scalable solution for campuses.
+                </p>
+            </div>
+            <div className="mx-5" style={{marginTop: '100px'}}>
+                <div className="row mx-1 gap-4 justify-content-center">
+                    <div className="col-lg-8  rounded-4 p-4" style={{ backgroundColor: '#d3e4fe'}}>
+                        <div className="w-75" >
+                            <i className="bi bi-calendar fs-3" style={{color: '#0059ba'}}></i>
+                            <h3 className="fw-bold mt-4">Intelligent Personal Schedule</h3>
+                            <p className="mt-4">Our heuristic-based algorithm tailor resource scheduling to its
+                                finest. From optimization and proper scheduling of campus resources
+                                to multiple resource evaluation and positioning to ensure that life is made
+                                easier for both lecturers and students.
+                            </p>
+                        </div>
+                        <div className="">
+                            <img src="src\assets\workspace.jpg" alt="workspace" className="img-fluid " style={{objectFit: 'cover', borderRadius: '15px'}}/>
+                        </div>
+                    </div>
+                    <div className="col-lg-3 rounded-4 p-4 text-white d-flex flex-column justify-content-lg-between" style={{backgroundColor: '#0059ba'}}>
+                        <div className="">
+                            <i className="bi bi-battery-charging me-2 fs-1"></i>
+                            <h3 className="fw-bold mt-1">Real-time Updates</h3>
+                            <p className="mt-4">Instant notification for room changes or lecturer availability.
+                                Stay ahead of every change.
+                            </p>
+                        </div>
+                        <div className="">
+                            <a href="" className="nav-link">Learn about Heuristics
+                                <i className="bi bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="container" style={{marginTop: '100px'}}>
+                <div className="row justify-content-center p-3">
+                    <div className="col-lg-4 rounded-3 shadow p-4" style={{backgroundColor: '#f8f9ff'}}>
+                        <div className="">
+                            <i className="bi bi-building fs-2 text-center text-white" style={{backgroundColor: '#ac6300', width: '50px', padding: '5px 10px', borderRadius: '20px'}}></i>
+                        </div>
+                        <h3 className="mt-3">Resource Booking</h3>
+                        <p>Reserve study rooms, laboratories, lecturers with just a click.</p>
+                    </div>
+                    <div className="col-lg-4 rounded-3 shadow p-4" style={{backgroundColor: '#f8f9ff'}}>
+                        <div className="">
+                            <i className="bi bi-exclamation-triangle-fill fs-2 text-center " style={{backgroundColor: '#d3e4fe', width: '50px', padding: '5px 10px', borderRadius: '20px'}}></i>
+                        </div>
+                        <h3 className="mt-3">Conflict Detection</h3>
+                        <p>Prevent overlapping classes, lecturer clashes and duplicate
+                            room allocations automatically.
+                        </p>
+                    </div>
+                    <div className="col-lg-4 rounded-3 shadow p-4" style={{backgroundColor: '#f8f9ff'}}>
+                        <div className="">
+                            <i className="bi bi-graph-up-arrow fs-2 text-center text-white " style={{backgroundColor: '#0059ba', width: '50px', padding: '5px 10px', borderRadius: '20px'}}></i>
+                        </div>
+                        <h3 className="mt-3">Optimized Resoure Usage</h3>
+                        <p>Reduce resource wastage and improve institutional productivity
+                            through balanced scheduling.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="d-flex justify-content-center">
+                <div className="rounded-4 text-center p-5" style={{marginTop: '100px', backgroundColor: '#0b1c30', width: 'fit-content'}}>
+                    <h3 className="fw-bold text-white">Ready to optimize your campus life?</h3>
+                    <p className="text-white-50 mt-4">
+                        Join thousands of students and faculty <br />members who have already 
+                        simplified their schedules.
+                    </p>
+                    <div className="ps-0 mt-5">
+                        <a href="#" className="btn btn-primary border-0" style={{backgroundColor: '#0059ba', color: 'white'}}>Start Scheduling</a>
+                        {/* <a href="#" className="btn btn-primary ms-2 fw-bold" style={{border: 'none', backgroundColor: 'white', color: '#0059ba'}}>View Dashboard</a> */}
+                    </div>
                 </div>
             </div>
         </>
