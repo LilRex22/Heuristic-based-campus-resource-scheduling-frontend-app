@@ -1,5 +1,6 @@
 import NavigationBar from "./navbar";
 import {Outlet} from 'react-router-dom';
+import Footer from "./footer";
 
 
 function Layout(){
@@ -10,6 +11,7 @@ function Layout(){
                 <div className="flex-grow-1">
                     <Outlet />
                 </div>
+                <Footer />
             </div>
         </>
     )

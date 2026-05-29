@@ -9,15 +9,15 @@ function Home(){
                         <div className="rounded-5 px-3 fw-bold" style={{width: 'fit-content', padding: '5px', backgroundColor: '#EDF0FF', color: '#0059ba'}}>
                             <i className="bi bi-battery-charging me-2"></i>
                             Next-Generation Academic Logic</div>
-                        <h1 className="display-5 fw-bold" style={{color: '#213145'}}>Intelligent Campus <br />
+                        <h1 className="display-5 fw-bold text-white">Intelligent Campus <br />
                         <span className="display-4 fw-bold" style={{color: '#0059ba'}}>Resource Scheduling</span></h1>
-                        <p style={{color: '#213145'}}>
+                        <p className="text-white">
                             Optimize classrooms, lecturers, laboratories, and campus facilities using heuristic-based scheduling. Eliminate conflicts and
                             maximize facility utilization with a single click.
                         </p>
-                        <div className="container ps-0">
-                            <a href="#" className="btn btn-primary" style={{backgroundColor: '#0059ba', color: 'white'}}>Get Started</a>
-                            <a href="#" className="btn btn-primary ms-2 fw-bold" style={{backgroundColor: 'white', borderColor: '#D7E2FF', color: '#0059ba'}}>View Dashboard</a>
+                        <div className="container ps-0 mt-4">
+                            <a href="#" className="btn btn-primary border-0" style={{backgroundColor: '#0059ba', color: 'white'}}>Get Started</a>
+                            <a href="#" className="btn btn-primary ms-2 fw-bold border-0" style={{backgroundColor: 'white', color: '#0059ba'}}>View Dashboard</a>
                         </div>
                         <div className="mt-5">
                             <div className="mt-3 d-flex  " style={{width: 'fit-content'}}>
@@ -28,13 +28,13 @@ function Home(){
                                 ))}
                             </div>
                             <div className="">
-                                <p>Trusted by over <span className="fw-bold" style={{color: '#0059ba'}}>2,000 +</span> users.</p>
+                                <p className="text-white">Trusted by over <span className="fw-bold" style={{color: '#ac6300'}}>2,000 +</span> users.</p>
                             </div>
                         </div>
                     </div>
 
 
-                    <div className="col-lg-5 rounded-4 shadow p-4" style={{color: '#213145'}}>
+                    <div className="col-lg-5 rounded-4 shadow p-4" style={{color: '#213145', backgroundColor: 'white'}}>
                         <div className="d-flex justify-content-between align-items-center">
                             <h5 style={{color: '#213145'}}>Weekly Time Grid</h5>
                             <div className="d-flex gap-1">
@@ -62,7 +62,7 @@ function Home(){
                     </div>
                 </div>
             </div>
-            <div className="container d-flex justify-content-evenly mt-2 rounded shadow" style={{color: '#213145'}}>
+            <div className="container d-flex justify-content-evenly mt-5 rounded shadow" style={{color: '#213145', backgroundColor: 'white'}}>
                 <div className="text-center p-2" style={{width: '33.3%'}}>
                     <h5 className="display-4 fw-bold rounded-5" style={{color: '#0059ba'}}>95%</h5>
                     <p>Efficiency Gain</p>
@@ -119,16 +119,16 @@ function Home(){
                     </div>
                 </div>
             </div>
-            <div className="container" style={{marginTop: '100px'}}>
-                <div className="row justify-content-center p-3">
-                    <div className="col-lg-4 rounded-3 shadow p-4" style={{backgroundColor: '#f8f9ff'}}>
+            <div className="mx-5" style={{marginTop: '100px'}}>
+                <div className="row justify-content-center p-3 gap-2">
+                    <div className="col-lg-3 rounded-3 shadow p-4 mt-3 mt-lg-0" style={{backgroundColor: '#f8f9ff'}}>
                         <div className="">
                             <i className="bi bi-building fs-2 text-center text-white" style={{backgroundColor: '#ac6300', width: '50px', padding: '5px 10px', borderRadius: '20px'}}></i>
                         </div>
                         <h3 className="mt-3">Resource Booking</h3>
                         <p>Reserve study rooms, laboratories, lecturers with just a click.</p>
                     </div>
-                    <div className="col-lg-4 rounded-3 shadow p-4" style={{backgroundColor: '#f8f9ff'}}>
+                    <div className="col-lg-3 rounded-3 shadow p-4 mt-3 mt-lg-0" style={{backgroundColor: '#f8f9ff'}}>
                         <div className="">
                             <i className="bi bi-exclamation-triangle-fill fs-2 text-center " style={{backgroundColor: '#d3e4fe', width: '50px', padding: '5px 10px', borderRadius: '20px'}}></i>
                         </div>
@@ -137,7 +137,7 @@ function Home(){
                             room allocations automatically.
                         </p>
                     </div>
-                    <div className="col-lg-4 rounded-3 shadow p-4" style={{backgroundColor: '#f8f9ff'}}>
+                    <div className="col-lg-3 rounded-3 shadow p-4 mt-3 mt-lg-0" style={{backgroundColor: '#f8f9ff'}}>
                         <div className="">
                             <i className="bi bi-graph-up-arrow fs-2 text-center text-white " style={{backgroundColor: '#0059ba', width: '50px', padding: '5px 10px', borderRadius: '20px'}}></i>
                         </div>
