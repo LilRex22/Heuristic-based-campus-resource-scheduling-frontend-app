@@ -11,7 +11,9 @@ function NavigationBar() {
     return (
     <Navbar expand="lg" className="bg-body-white p-3" style={{boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', fontFamily: 'Sans-serif', backgroundColor: 'white'}}>
         <Container fluid>
-            <Navbar.Brand href="#" className='fw-bold' style={{ color: '#213145'}}><span style={{color: '#0059ba'}}>Smart</span>Slot</Navbar.Brand>
+            <Navbar.Brand href="#" className='fw-bold d-flex align-items-center' style={{ color: '#213145'}}>
+                <img width="35" height="35" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
+                <span style={{color: '#0059ba'}}>Smart</span>Slot</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
             <Nav

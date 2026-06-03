@@ -5,6 +5,7 @@ import Home from './pages/home';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Layout from './components/layout';
 import './components/app.css'; 
+import Login from './pages/login';
 // our custom css file
 
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
             <Route path='/' element={<Layout/>}>
               <Route index element={<Home />} />
+              <Route  path='login' element={<Login/> } />
             </Route>
         </Routes>
       </BrowserRouter>
