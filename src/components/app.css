@@ -1,3 +1,7 @@
+body{
+    margin: 0;
+    box-sizing: border-box;
+}
 .hero{
     background: linear-gradient(rgba(58, 58, 58, 0.6), rgba(61, 61, 61, 0.6)), url('src/assets/4235.jpg');
     background-size: cover;
@@ -37,4 +41,76 @@
     border-radius: 8px;
     border: none;
     color: white;
+}
+/* Sidebar visible only on lg+ via bootstrap utility classes.
+   Adjust top to match your navbar height so it doesn't overlap. */
+
+.sidebar {
+    position: sticky;
+    top: 72px; /* set this to your navbar height */
+    height: 100vh; /* subtract navbar + small footer space if any */
+    width: 220px;
+    padding: 0.5rem 0;
+    overflow-y: auto;
+    z-index: 1; /* keep below navbar if navbar uses higher z-index */
+    background-color: white;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.sidebar .nav-link {
+    color: #213145;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    margin: 0.25rem 0;
+}
+
+.sidebar .nav-link.active {
+    background: rgba(79,142,247,0.08);
+    border-left: 4px solid #0059ba;
+    color: #0059ba;
+    font-weight: 600;
+}
+
+/* On smaller screens the sidebar remains hidden via d-none d-lg-flex */
+@media (max-width: 991.98px) {
+    .content-with-sidebar {
+    margin-left: 0;
+    }
+}
+
+:root{
+    --navbar-height: 72px; /* adjust to match your actual navbar height */
+    --sidebar-width: 220px;
+}
+
+/* Sidebar: fixed on lg+ so it doesn't scroll with page
+   start at the top of the viewport and pad its content below the navbar */
+@media (min-width: 992px) {
+    .sidebar {
+    position: fixed;
+    top: 0; /* start at top so no visible gap above the sidebar */
+    left: var(--sidebar-left);
+    height: 100vh; /* full viewport height */
+    width: var(--sidebar-width);
+    padding: 0.5rem;
+    padding-top: 50px;
+    overflow-y: auto;
+    z-index: 1; /* lower than .navbar so navbar sits above */
+    background-color: white;
+    box-shadow: 0 6px 18px rgba(33,49,69,0.06);
+    border-radius: 8px;
+    }
+
+  /* push main content to the right of the fixed sidebar */
+    .content-with-sidebar {
+    margin-left: var(--sidebar-width);
+    padding-top: 1.5rem;
+    }
 }

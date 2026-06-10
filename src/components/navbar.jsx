@@ -3,15 +3,25 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Link, useLocation } from 'react-router-dom';
 
 
 
 
 function NavigationBar() {
+
+    const navigation = [
+        // {Name: '', Path: '/dashboard'},
+        // {Name: 'Schedule', Path: '/schedule'},
+        // {Name: 'Resources', Path: '/resources'},
+        // {Name: 'Timetable', Path: '/timetable'}
+    ]
+    const location = useLocation();
+
     return (
     <Navbar expand="lg" className="bg-body-white p-3" style={{boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', fontFamily: 'Sans-serif', backgroundColor: 'white'}}>
         <Container fluid>
-            <Navbar.Brand href="#" className='fw-bold d-flex align-items-center' style={{ color: '#213145'}}>
+            <Navbar.Brand href="/" className='fw-bold d-flex align-items-center' style={{ color: '#213145'}}>
                 <img width="35" height="35" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
                 <span style={{color: '#0059ba'}}>Smart</span>Slot</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
@@ -21,10 +31,16 @@ function NavigationBar() {
                 style={{ maxHeight: '100px' }}
                 navbarScroll
             >
-                <Nav.Link href="#action1" style={{ color: '#213145'}}>Dashboard</Nav.Link>
-                <Nav.Link href="#action2" style={{ color: '#213145'}}>Schedule</Nav.Link>
-                <Nav.Link href="#" style={{ color: '#213145'}}>Resources</Nav.Link>
-                <Nav.Link href="#" style={{ color: '#213145'}}>Timetable</Nav.Link>
+
+                {navigation.map((link) => {
+                    return (
+                        <Nav.Link as={Link}
+                            to={link.Path}
+                            key={link.Path}
+                            style={location.pathname === link.Path ? {borderBottom: '3px solid #0059ba'} : {color: '#213145'}}>{link.Name}
+                        </Nav.Link>
+                    )
+                })}
             </Nav>
             <Form className="d-flex position-relative">
                 <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>
