@@ -8,6 +8,8 @@ import './components/app.css';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard';
+import Lecturers from './pages/lecturers';
+import Classrooms from './pages/classrooms';
 import DashboardLayout from './components/dashboardLayout';
 // our custom css file
 
@@ -16,21 +18,20 @@ function App() {
   return (
       <BrowserRouter>
         <Routes>
-          {/* this page this route routes to doesn't need the default page layout settings, it standsalone with its own design, so we put it outside the layout route */}
-          <Route path='/dashboard' element={<Dashboard/>} />
-
+          {/* note that child routes do not start with '/' because they are relative to the parent route; if we start with '/', it becomes an absolute path and will not be nested under the parent route */}
             {/* this is the whole page layout, the dashboard is excluded because it has its own layout (sidebar + navbar) */}
             <Route path='/' element={<Layout/>}>
               <Route index element={<Home />} />
-              <Route  path='/login' element={<Login/> } />
-              <Route path='/signup' element={<SignUp/>} />
+              <Route  path='login' element={<Login/> } />
+              <Route path='signup' element={<SignUp/>} />
             </Route>
         
             {/* dashboard uses its own layout (sidebar + navbar) */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
+              <Route path='lecturers' element={<Lecturers />} />
+              <Route path='classrooms' element={<Classrooms />} />
             </Route>
-
 
         </Routes>
       </BrowserRouter>

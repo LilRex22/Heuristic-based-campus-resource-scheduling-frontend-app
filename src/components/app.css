@@ -111,6 +111,6 @@ body{
   /* push main content to the right of the fixed sidebar */
     .content-with-sidebar {
     margin-left: var(--sidebar-width);
-    padding-top: 1.5rem;
+    padding-top: 0rem;
     }
 }

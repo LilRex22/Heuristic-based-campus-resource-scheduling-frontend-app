@@ -5,14 +5,16 @@ import { Link, useLocation } from 'react-router-dom';
 function Sidebar() {
     const location = useLocation();
 
+    // these links are nested links under Dashboard, they shouldn't start with '/' because that would make them absolute paths and they won't be nested under the dashboard route; 
     const links = [
-    { label: 'Dashboard', path: '/dashboard', icon: 'bi-house-fill' },
-    { label: 'Lecturers', path: '/lecturers', icon: 'bi-person-badge-fill' },
-    { label: 'Classrooms', path: '/classrooms', icon: 'bi-building' },
-    { label: 'Courses', path: '/courses', icon: 'bi-journal-bookmark-fill' },
-    { label: 'Schedule', path: '/schedule', icon: 'bi-calendar-event' },
-    { label: 'Resources', path: '/resources', icon: 'bi-box-seam' },
-    { label: 'Timetable', path: '/timetable', icon: 'bi-clock' }
+    { label: 'Home', path: '/', icon: 'bi-house-fill' },
+    { label: 'Dashboard', path: '/dashboard', icon: 'bi-bar-chart-line-fill' },
+    { label: 'Lecturers', path: '/dashboard/lecturers', icon: 'bi-person-badge-fill' },
+    { label: 'Classrooms', path: '/dashboard/classrooms', icon: 'bi-building' },
+    { label: 'Courses', path: '/dashboard/courses', icon: 'bi-journal-bookmark-fill' },
+    { label: 'Schedule', path: '/dashboard/schedule', icon: 'bi-calendar-event' },
+    { label: 'Resources', path: '/dashboard/resources', icon: 'bi-box-seam' },
+    { label: 'Timetable', path: '/dashboard/timetable', icon: 'bi-clock' }
     ];
 
     return (
@@ -20,7 +22,7 @@ function Sidebar() {
     <aside className="d-none d-lg-flex flex-column sidebar" style={{ borderRadius: '0' }}>
         <div className="sidebar-brand pb-3 py-2">
             <img src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="logo" width="28" height="28" />
-            <span className="ms-2 fw-bold" style={{ color: '#0059ba' }}>Smart<span style={{ color: '#213145' }}>Slot</span></span>
+            <span className="fw-bold" style={{ color: '#0059ba' }}>Smart<span style={{ color: '#213145' }}>Slot</span></span>
         </div>
 
         <Nav className="flex-column px-2 mt-3">
