@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Link } from 'react-router-dom';
 
 
 function Classrooms(){
@@ -29,25 +30,53 @@ function Classrooms(){
                                 <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
                             </Form>
 
-                            <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ Add Classroom</Button>
+                            <Link variant="outline-primary" className='text-decoration-none btn btn-secondary' style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ 
+                                <i className='bi bi-house-fill me-2 ms-1'></i>
+                                Add Classroom
+                            </Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className='p-3 fw-bold' style={{color: '#0b1c30'}}>
+            <div className='p-3' style={{color: '#0b1c30'}}>
                 <h1 className='fw-bold'>Classrooms</h1>
 
-                <div className="mt-5 border rounded-2 d-flex justify-content-evenly align-items-center bg-white p-4">
-                    <div className="border rounded-2" style={{backgroundColor: '#d3e4fe', width: 'fit-content', padding: '5px'}}>
-                        <img width="50" height="50" src="https://img.icons8.com/ios/50/auditorium.png" alt="auditorium"/>
+                <p className='mt-5 fw-bold text-muted'>0 TOTAL CLASSROOMS</p>
+                {/* the classrooms */}
+                <Link className='text-decoration-none' style={{color: '#0b1c30'}}>
+                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4">
+                        <div className="d-flex align-items-center">
+                            <div className="border rounded-4 p-4" style={{backgroundColor: '#d3e4fe', width: 'fit-content'}}>
+                                <img width="50" height="50" src="https://img.icons8.com/ios/50/auditorium.png" alt="auditorium"/>
+                            </div>
+                            <h2 className='ms-4'>Maths Hall</h2>
+                        </div>
+                        <div className="">
+                            <p>
+                                <i className='bi bi-geo-alt-fill'></i>
+                                Science Village.
+                            </p>
+                            <i className='bi bi-person-fill'></i>200 seats
+                        </div>
+                        <div className="p-2 border rounded-2" style={{backgroundColor: 'rgb(127, 221, 127)'}}>
+                            AVAILABLE
+                        </div>
+                        <i className='bi bi-arrow-right fs-2'></i>
                     </div>
-                    <h2>Maths Hall</h2>
-                    <div className="">
-                        <p>
-                            <i className='bi bi-geo-alt-fill'></i>
-                            Science Village.
-                        </p>
-                        <i className='bi bi-person-fill'></i>200 seats
+                </Link>
+
+                <div className="" style={{marginTop: '200px'}}>
+                    <h5 className='text-muted mt-2'>SPACE UTILIZATION INSIGHTS</h5>
+                    <div className="row">
+                        <div className="col-lg-6 bg-white p-4 border rounded-4 mt-3" >
+                            <h3 className='display-5 fw-bold mt-3'>82%</h3>
+                            <p className='text-muted'>Average Weekly Occupancy</p>
+                        </div>
+                        
+                        <div className="col-lg-6 bg-white p-4 border rounded-4 mt-3" >
+                            <h3 className='display-5 fw-bold mt-3'>12</h3>
+                            <p className='text-muted'>Free for Large Groups ({'>'}150)</p>
+                        </div>
                     </div>
                 </div>
             </div>

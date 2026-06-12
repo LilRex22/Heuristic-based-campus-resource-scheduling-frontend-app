@@ -10,6 +10,7 @@ import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard';
 import Lecturers from './pages/lecturers';
 import Classrooms from './pages/classrooms';
+import Courses from './pages/courses';
 import DashboardLayout from './components/dashboardLayout';
 // our custom css file
 
@@ -31,6 +32,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path='lecturers' element={<Lecturers />} />
               <Route path='classrooms' element={<Classrooms />} />
+              <Route path='courses' element={<Courses />} />
             </Route>
 
         </Routes>
