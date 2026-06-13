@@ -44,7 +44,7 @@ function Classrooms(){
                 <p className='mt-5 fw-bold text-muted'>0 TOTAL CLASSROOMS</p>
                 {/* the classrooms */}
                 <Link className='text-decoration-none' style={{color: '#0b1c30'}}>
-                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4">
+                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}}>
                         <div className="d-flex align-items-center">
                             <div className="border rounded-4 p-4" style={{backgroundColor: '#d3e4fe', width: 'fit-content'}}>
                                 <img width="50" height="50" src="https://img.icons8.com/ios/50/auditorium.png" alt="auditorium"/>

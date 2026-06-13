@@ -53,7 +53,7 @@ function Lecturers(){
                 <p className='text-muted fw-bold'>0 TOTAL LECTURERS</p>
 
                 <Link className='text-decoration-none' style={{color: '#0b1c30'}}>
-                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4">
+                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}}>
                         <div className="d-flex align-items-center">
                             <div className="p-4 rounded-4 text-white" style={{backgroundColor: randColor}}>
                                 <h4 className='fw-bold fs-1'>JD</h4>

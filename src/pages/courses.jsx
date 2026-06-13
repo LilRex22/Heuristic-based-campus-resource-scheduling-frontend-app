@@ -55,7 +55,7 @@ function Courses(){
                 </div>
 
                 {/* the courses */}
-                <div className="p-4 rounded-3 bg-white mt-5 shadow" style={{color: '#0b1c30'}}>
+                <div className="p-4 rounded-3 bg-white mt-5 shadow" style={{color: '#0b1c30', border: '1px solid rgba(11, 28, 48, 0.25)'}}>
                     <div className="d-flex justify-content-between border-bottom p-2">
                         <div className="">
                             <p className='p-2 rounded-2 text-white fw-bold' style={{backgroundColor: '#0b1c30', width: 'fit-content'}}>CSC401</p>
