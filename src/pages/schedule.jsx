@@ -2,8 +2,8 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Button } from 'bootstrap';
-import { Link } from 'react-router-dom';
+// import Button from 'react-bootstrap/Button';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
@@ -11,15 +11,24 @@ import Select from 'react-select';
 
 
 function Schedule() {
+    const location = useLocation();
     // all available courses in the backend
     const [availableCourses, setAvailableCourses] = useState([]);
     // courses clicked from the Dropdown
     const [selectedCourses, setSelectedCourses] = useState([]);
 
+    const [availableLecturers, setAvailableLecturers] = useState([]);
+    const [selectedLecturers, setSelectedLecturers] = useState([]);
+
     // convert the available courses object to a list acceptable by the react-select component 
     const options = availableCourses.map((course)=>({ value: course.id, label: course.Course_code}));
     console.log(options)
 
+    const optionsLecturers = availableLecturers.map((lecturer)=>({ value: lecturer.id, label: lecturer.Name, dept: lecturer.Department, avail: lecturer.Available }));
+    console.log(optionsLecturers)
+
+    
+    // for selecting courses
     const handleCourseSelect = (selectedOption) => {
       if (!selectedOption) return; // cleared or nothing selected
         const courseId = Number(selectedOption.value);
@@ -34,6 +43,21 @@ function Schedule() {
         setSelectedCourses(prev => [...prev, selectedCourse]);
     };
 
+    // for selecting lecturers
+    const handleLecturerSelect = (selectedOption) => {
+      if (!selectedOption) return; // cleared or nothing selected
+        const lecturerId = Number(selectedOption.value);
+        const selectedLecturer = availableLecturers.find(l => l.id === lecturerId);
+        if (!selectedLecturer) return;
+
+        if (selectedLecturers.some(l => l.id === lecturerId)) {
+            alert('Lecturer already selected');
+        return;
+        }
+
+        setSelectedLecturers(prev => [...prev, selectedLecturer]);
+    };
+
     // fetch the courses
     useEffect(() => {
         const fetchCourses = async () => {
@@ -46,9 +70,24 @@ function Schedule() {
             }
         };
         fetchCourses();
-    }, []);
+    }, [location.pathname]);
 
-    console.log(availableCourses)
+
+    // fetch the lecturers
+    useEffect(() => {
+        const fetchLecturers = async () => {
+        try {
+                const response = await axios.get('http://localhost:8000/api/lecturers/');
+                console.log(response.data)
+                setAvailableLecturers(response.data);
+            } catch (error) {
+                console.error('Error fetching lecturers:', error);
+            }
+        };
+        fetchLecturers();
+    }, [location.pathname]);
+
+    console.log(availableLecturers)
 
     const details = [
         { No: '1', Name: 'Courses'},
@@ -140,44 +179,122 @@ function Schedule() {
 
                 {/* main content */}
                 <div className="row mt-5">
-                    <div className="col-lg-6 d-flex justify-content-between align-items-center">
-                        <h3>1. Courses</h3>
-                        <Select
-                            options={options}
-                            placeholder="Search and Select a Course"
-                            onChange={handleCourseSelect}
-                            >
-                        </Select>
-                        <tbody>
-
-                        {selectedCourses.map(course => (
-
-                        <tr key={course.id}>
-
-                            <td>{course.code}</td>
-                            <td>{course.title}</td>
-                            <td>{course.level}</td>
-                            <td>{course.credits}</td>
-                            <td>{course.students}</td>
-                            <td>{course.type}</td>
-
-                            <td>
-                                <Button
-                                    variant="danger"
-                                    size="sm"
-                                    // onClick={() => removeCourse(course.id)}
+                    <div className="col-lg-6">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h3>1. Courses</h3>
+                            <Select
+                                options={options}
+                                placeholder="Search and Select a Course"
+                                onChange={handleCourseSelect}
                                 >
-                                    Remove
-                                </Button>
-                            </td>
-
-                        </tr>
-
-                        ))}
-
-                        </tbody>
+                            </Select>
+                        </div>
+                        <table className="table table-hover align-middle mt-2 ">
+                            <thead>
+                                <tr>
+                                    <th className='text-muted'>Code</th>
+                                    <th className='text-muted'>Course Title</th>
+                                    <th className='text-muted'>Level</th>
+                                    <th className='text-muted'>Credits</th>
+                                    <th className='text-muted'>Students</th>
+                                    <th className='text-muted'>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedCourses.length === 0 ? (
+                                    <tr>
+                                        <td
+                                            colSpan="6"
+                                            className="text-center text-muted py-4"
+                                        >
+                                            No courses selected
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    selectedCourses.map(course => (
+                                        <tr key={course.id}>
+                                            <td>
+                                                {course.Course_code}
+                                            </td>
+                                            <td>
+                                                {course.Course_title}
+                                            </td>
+                                            <td>
+                                                {course.Level}
+                                            </td>
+                                            <td>
+                                                {course.Credit}
+                                            </td>
+                                            <td>
+                                                {course.Student}
+                                            </td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    // onClick={() =>
+                                                    //     removeCourse(course.id)
+                                                    // }
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
                     </div>
-                    <div className="col-lg-6"></div>
+
+
+                    <div className="col-lg-6">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h3>2. Lecturers</h3>
+                            <Select
+                                options={optionsLecturers}
+                                placeholder="Search and Select a Lecturer"
+                                onChange={handleLecturerSelect}
+                                >
+                            </Select>
+                        </div>
+                        <table className="table table-hover align-middle mt-2 ">
+                            <thead>
+                                <tr>
+                                    <th className='text-muted'>Name</th>
+                                    <th className='text-muted'>Department</th>
+                                    <th className='text-muted'>Available</th>
+                                    <th className='text-muted'>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedLecturers.length === 0 ? (
+                                    <tr>
+                                        <td
+                                            colSpan="4"
+                                            className="text-center text-muted py-4"
+                                        >
+                                            No lecturers selected
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    selectedLecturers.map(lecturer => (
+                                        <tr key={lecturer.id}>
+                                            <td>{lecturer.Name}</td>
+                                            <td>{lecturer.Department}</td>
+                                            <td>{String(lecturer.Available)}</td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    // onClick={() => removeLecturer(lecturer.id)}
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </>
