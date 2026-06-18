@@ -2,10 +2,64 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Button } from 'bootstrap';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Select from 'react-select';
+
 
 
 function Schedule() {
+    // all available courses in the backend
+    const [availableCourses, setAvailableCourses] = useState([]);
+    // courses clicked from the Dropdown
+    const [selectedCourses, setSelectedCourses] = useState([]);
+
+    // convert the available courses object to a list acceptable by the react-select component 
+    const options = availableCourses.map((course)=>({ value: course.id, label: course.Course_code}));
+    console.log(options)
+
+    const handleCourseSelect = (selectedOption) => {
+      if (!selectedOption) return; // cleared or nothing selected
+        const courseId = Number(selectedOption.value);
+        const selectedCourse = availableCourses.find(c => c.id === courseId);
+        if (!selectedCourse) return;
+
+        if (selectedCourses.some(c => c.id === courseId)) {
+            alert('Course already selected');
+        return;
+        }
+
+        setSelectedCourses(prev => [...prev, selectedCourse]);
+    };
+
+    // fetch the courses
+    useEffect(() => {
+        const fetchCourses = async () => {
+        try {
+                const response = await axios.get('http://localhost:8000/api/courses/');
+                console.log(response.data)
+                setAvailableCourses(response.data);
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        };
+        fetchCourses();
+    }, []);
+
+    console.log(availableCourses)
+
+    const details = [
+        { No: '1', Name: 'Courses'},
+        { No: '2', Name: 'Lecturers'},
+        { No: '3', Name: 'Classrooms'},
+        { No: '4', Name: 'Time Slots'},
+        { No: '5', Name: 'Constraints'},
+        { No: '6', Name: 'Review & Generate'}
+    ]
+
+
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -64,6 +118,67 @@ function Schedule() {
                     </div>
                 </div>
 
+                {/* the progress bar stuff abi wetin */}
+                <div className="mt-5">
+                    <div className="row">
+                        {
+                            details.map((detail) => {
+                                return (
+                                    <div className="col-lg-4 d-flex align-items-center justify-content-between" key={detail.No}>
+                                        <div className="rounded-circle d-flex justify-content-center align-items-center text-center" style={{backgroundColor: '#c4c7c9', width: '40px', height: '40px'}}>
+                                            {detail.No}
+                                        </div>
+                                        <p className='text-muted fw-bold mt-3'>{detail.Name}</p>
+                                        <div className="mt-1" style={{width: '150px', height: '2px', backgroundColor: '#c4c7c9'}}></div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+
+                {/* main content */}
+                <div className="row mt-5">
+                    <div className="col-lg-6 d-flex justify-content-between align-items-center">
+                        <h3>1. Courses</h3>
+                        <Select
+                            options={options}
+                            placeholder="Search and Select a Course"
+                            onChange={handleCourseSelect}
+                            >
+                        </Select>
+                        <tbody>
+
+                        {selectedCourses.map(course => (
+
+                        <tr key={course.id}>
+
+                            <td>{course.code}</td>
+                            <td>{course.title}</td>
+                            <td>{course.level}</td>
+                            <td>{course.credits}</td>
+                            <td>{course.students}</td>
+                            <td>{course.type}</td>
+
+                            <td>
+                                <Button
+                                    variant="danger"
+                                    size="sm"
+                                    // onClick={() => removeCourse(course.id)}
+                                >
+                                    Remove
+                                </Button>
+                            </td>
+
+                        </tr>
+
+                        ))}
+
+                        </tbody>
+                    </div>
+                    <div className="col-lg-6"></div>
+                </div>
             </div>
         </>
     )

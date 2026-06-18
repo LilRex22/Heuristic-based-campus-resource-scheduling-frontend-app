@@ -42,7 +42,7 @@ function Dashboard() {
                 <div className="row mt-5">
                     { details.map(detail => {
                         return (
-                            <div className="col-lg-2 border rounded-2 bg-white">
+                            <div className="col-lg-2 border rounded-2 bg-white" key={detail.Name}>
                                 <div className="p-2 my-2 border rounded-2" style={{backgroundColor: '#d3e4fe', width: 'fit-content'}}>
                                     <i className={detail.Icon}></i>
                                 </div>
@@ -68,11 +68,11 @@ function Dashboard() {
                     <div className="row mt-5">
                         {workflow.map(flow => {
                             return (
-                                <div className="col-lg-3 text-center p-3" style={{borderRight: '1px solid rgb(215, 218, 236)'}}>
+                                <div className="col-lg-3 text-center p-3" style={{borderRight: '1px solid rgb(215, 218, 236)'}} key={flow.step}>
                                     <div className="p-2 rounded-circle shadow mb-4" style={{backgroundColor: flow.bg, width: 'fit-content', margin: '0 auto'}}>
                                         <img src={flow.img} alt="icon" />
                                     </div>
-                                    <text className="mb-3 fw-bold">{flow.step}</text>
+                                    <p className="mb-3 fw-bold">{flow.step}</p>
                                     <h3 className="mb-3">{flow.title}</h3>
                                     <p>{flow.text}</p>
                                 </div>
