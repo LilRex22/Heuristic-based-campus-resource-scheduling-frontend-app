@@ -23,7 +23,7 @@ function Courses(){
                                 <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>
                                 <Form.Control
                                 type="search"
-                                placeholder="Search Classrooms..."
+                                placeholder="Search Courses..."
                                 className=" me-2 border-0"
                                 aria-label="Search"
                                 style={{backgroundColor: '#EDF0FF',borderRadius: '20px', width: '300px', paddingLeft: '35px'}}

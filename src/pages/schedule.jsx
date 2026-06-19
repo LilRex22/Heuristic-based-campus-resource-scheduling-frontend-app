@@ -20,12 +20,20 @@ function Schedule() {
     const [availableLecturers, setAvailableLecturers] = useState([]);
     const [selectedLecturers, setSelectedLecturers] = useState([]);
 
-    // convert the available courses object to a list acceptable by the react-select component 
+    const [availableClassrooms, setAvailableClassrooms] = useState([]);
+    const [selectedClassrooms, setSelectedClassrooms] = useState([]);
+
+    const [availableTimeslots, setAvailableTimeslots] = useState([])
+    const [selectedTimeslots, setSelectedTimeslots] = useState([])
+
+    // convert the available objects to a list acceptable by the react-select component 
     const options = availableCourses.map((course)=>({ value: course.id, label: course.Course_code}));
-    console.log(options)
 
     const optionsLecturers = availableLecturers.map((lecturer)=>({ value: lecturer.id, label: lecturer.Name, dept: lecturer.Department, avail: lecturer.Available }));
-    console.log(optionsLecturers)
+
+    const optionsClassrooms = availableClassrooms.map((classroom)=>({ value: classroom.id, label: classroom.Name, capacity: classroom.Capacity, type: classroom.Type, avail: classroom.Available }));
+
+    const optionsTimeslots = availableTimeslots.map((timeslot)=>({ value: timeslot.id, label: timeslot.Day, start: timeslot.Start_time, end: timeslot.End_time, duration: timeslot.Duration}))
 
     
     // for selecting courses
@@ -43,6 +51,14 @@ function Schedule() {
         setSelectedCourses(prev => [...prev, selectedCourse]);
     };
 
+    // for removing courses
+    const removeCourse = (id) => {
+    setSelectedCourses(prev =>
+        prev.filter(course => course.id !== id)
+    );
+
+};
+
     // for selecting lecturers
     const handleLecturerSelect = (selectedOption) => {
       if (!selectedOption) return; // cleared or nothing selected
@@ -57,6 +73,60 @@ function Schedule() {
 
         setSelectedLecturers(prev => [...prev, selectedLecturer]);
     };
+
+    // for removing lecturers
+    const removeLecturer = (id) => {
+        setSelectedLecturers(prev =>
+            prev.filter(lecture => lecture.id !== id)
+        );
+    };
+
+
+    // for selecting classrooms
+    const handleClassroomSelect = (selectedOption) => {
+      if (!selectedOption) return; // cleared or nothing selected
+        const classroomId = Number(selectedOption.value);
+        const selectedClassroom = availableClassrooms.find(c => c.id === classroomId);
+        if (!selectedClassroom) return;
+
+        if (selectedClassrooms.some(c => c.id === classroomId)) {
+            alert('Classroom already selected');
+        return;
+        }
+
+        setSelectedClassrooms(prev => [...prev, selectedClassroom]);
+    };
+
+    // for removing classrooms
+    const removeClassrooms = (id) => {
+        setSelectedClassrooms(prev =>
+            prev.filter(classroom => classroom.id !== id)
+        );
+    };  
+
+
+    // for selecting timeslots
+    const handleTimeslotSelect = (selectedOption) => {
+      if (!selectedOption) return; // cleared or nothing selected
+        const timeslotId = Number(selectedOption.value);
+        const selectedTimeslot = availableTimeslots.find(t => t.id === timeslotId);
+        if (!selectedTimeslot) return;
+
+        if (selectedTimeslots.some(t => t.id === timeslotId)) {
+            alert('Timeslot already selected');
+        return;
+        }
+
+        setSelectedTimeslots(prev => [...prev, selectedTimeslot]);
+    };
+
+    // for removing timeslots
+    const removeTimeslots = (id) => {
+        setSelectedTimeslots(prev =>
+            prev.filter(timeslot => timeslot.id !== id)
+        );
+    };
+
 
     // fetch the courses
     useEffect(() => {
@@ -87,15 +157,50 @@ function Schedule() {
         fetchLecturers();
     }, [location.pathname]);
 
-    console.log(availableLecturers)
+
+    // fetch the timeslots
+    useEffect(() => {
+        const fetchTimeslots = async () => {
+        try {
+                const response = await axios.get('http://localhost:8000/api/timeslots/');
+                console.log(response.data)
+                setAvailableTimeslots(response.data);
+            } catch (error) {
+                console.error('Error fetching timeslots:', error);
+            }
+        };
+        fetchTimeslots();
+    }, [location.pathname]);
+    console.log(availableTimeslots)
+
+    // fetch the classrooms
+    useEffect(() => {
+        const fetchClassrooms = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/classrooms/');
+                console.log(response.data)
+                setAvailableClassrooms(response.data);
+            } catch (error) {
+                console.error('Error fetching classrooms:', error);
+            }
+        };
+        fetchClassrooms();
+    }, [location.pathname]);
+
+
+    // keep track of which step has been opened
+    const [visitedSteps, setVisitedSteps] = useState([]);
+    const markVisited = (id) => {
+        setVisitedSteps(prev => (prev.includes(id) ? prev : [...prev, id]));
+        console.log('step visited:', id)
+    }
 
     const details = [
-        { No: '1', Name: 'Courses'},
-        { No: '2', Name: 'Lecturers'},
-        { No: '3', Name: 'Classrooms'},
-        { No: '4', Name: 'Time Slots'},
-        { No: '5', Name: 'Constraints'},
-        { No: '6', Name: 'Review & Generate'}
+        { No: '1', Name: 'Courses', id: 'pg1', Description: 'Step One: Click on the Select a Course button, from the list of available courses, select the courses to be scheduled for. Each selected course appear on the table where they can be deleted when necessary.'},
+        { No: '2', Name: 'Lecturers', id: 'pg2', Description: 'Step Two: Click on the Select a Lecturer button, from the list of available lecturers, select the lecturer to be assigned to a schedule. Each selected lecturer appear on the table where they can be deleted when necessary.'},
+        { No: '3', Name: 'Classrooms', id: 'pg3', Description: 'Step Three: Click on the Select a Classroom button, from the list of available classrooms, select the classrooms to used. Each selected classroom appear on the table where they can be deleted when necessary.'},
+        { No: '4', Name: 'Time Slots', id: 'pg4', Description: 'Step Four: Click on the Select a Timeslot button, from the list of available timeslots, select the timeslot to be scheduled for. Each selected timeslot appear on the table where they can be deleted when necessary.'},
+        { No: '5', Name: 'Review & Generate', id: 'pg5', Description: 'Step Five: Click on the Generate button to apply the heuristic algorithm on the set constraints to create an optimized schedule.'}
     ]
 
 
@@ -163,12 +268,19 @@ function Schedule() {
                         {
                             details.map((detail) => {
                                 return (
-                                    <div className="col-lg-4 d-flex align-items-center justify-content-between" key={detail.No}>
-                                        <div className="rounded-circle d-flex justify-content-center align-items-center text-center" style={{backgroundColor: '#c4c7c9', width: '40px', height: '40px'}}>
-                                            {detail.No}
+                                    <div className="col-lg-4" key={detail.No}>
+                                        <div className=" d-flex align-items-center justify-content-between" id={detail.id} >
+                                            <div className="rounded-circle d-flex justify-content-center align-items-center text-center" style={{backgroundColor: visitedSteps.includes(detail.id) ? '#64a2ff' : 'grey', color: 'white', width: '40px', height: '40px'}}>
+                                                {detail.No}
+                                            </div>
+                                            <div className="">
+                                                <p className='fw-bold mt-3' style={{color: visitedSteps.includes(detail.id) ? '#64a2ff' : 'grey'}}>{detail.Name}</p>
+                                            </div>
+                                            <div className="mt-1" style={{width: '150px', height: '2px', backgroundColor: visitedSteps.includes(detail.id) ? '#64a2ff' : 'grey'}}></div>
                                         </div>
-                                        <p className='text-muted fw-bold mt-3'>{detail.Name}</p>
-                                        <div className="mt-1" style={{width: '150px', height: '2px', backgroundColor: '#c4c7c9'}}></div>
+                                        <div className="">
+                                            <p className='' style={{color: visitedSteps.includes(detail.id) ? '#64a2ff' : 'grey'}}>{detail.Description}</p>
+                                        </div>
                                     </div>
                                 )
                             })
@@ -181,8 +293,10 @@ function Schedule() {
                 <div className="row mt-5">
                     <div className="col-lg-6">
                         <div className="d-flex justify-content-between align-items-center">
-                            <h3>1. Courses</h3>
+                            <h3 style={{color: '#2c72d9'}}>1. Courses</h3>
                             <Select
+                                onMenuOpen={() => markVisited('pg1')}
+                                openMenuOnFocus={() => markVisited('pg1')}
                                 options={options}
                                 placeholder="Search and Select a Course"
                                 onChange={handleCourseSelect}
@@ -231,9 +345,9 @@ function Schedule() {
                                             <td>
                                                 <button
                                                     className="btn btn-sm btn-outline-danger"
-                                                    // onClick={() =>
-                                                    //     removeCourse(course.id)
-                                                    // }
+                                                    onClick={() =>
+                                                        removeCourse(course.id)
+                                                    }
                                                 >
                                                     <i className="bi bi-trash"></i>
                                                 </button>
@@ -248,8 +362,10 @@ function Schedule() {
 
                     <div className="col-lg-6">
                         <div className="d-flex justify-content-between align-items-center">
-                            <h3>2. Lecturers</h3>
+                            <h3 style={{color: '#2c72d9'}}>2. Lecturers</h3>
                             <Select
+                                onMenuOpen={() => markVisited('pg2')}
+                                openMenuOnFocus={() => markVisited('pg2')}
                                 options={optionsLecturers}
                                 placeholder="Search and Select a Lecturer"
                                 onChange={handleLecturerSelect}
@@ -284,7 +400,7 @@ function Schedule() {
                                             <td>
                                                 <button
                                                     className="btn btn-sm btn-outline-danger"
-                                                    // onClick={() => removeLecturer(lecturer.id)}
+                                                    onClick={() => removeLecturer(lecturer.id)}
                                                 >
                                                     <i className="bi bi-trash"></i>
                                                 </button>
@@ -294,6 +410,124 @@ function Schedule() {
                                 )}
                             </tbody>
                         </table>
+                    </div>
+
+                    <div className="col-lg-6 mt-5">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h3 style={{color: '#2c72d9'}}>3. Classrooms</h3>
+                            <Select
+                                onMenuOpen={() => markVisited('pg3')}
+                                openMenuOnFocus={() => markVisited('pg3')}
+                                options={optionsClassrooms}
+                                placeholder="Search and Select a Classroom"
+                                onChange={handleClassroomSelect}
+                            >
+                            </Select>
+                        </div>
+                        <table className="table table-hover align-middle mt-2 ">
+                            <thead>
+                                <tr>
+                                    <th className='text-muted'>Room Name</th>
+                                    <th className='text-muted'>Type</th>
+                                    <th className='text-muted'>Capacity</th>
+                                    <th className='text-muted'>Location</th>
+                                    <th className='text-muted'>Available</th>
+                                    <th className='text-muted'>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedClassrooms.length === 0 ? (
+                                    <tr>
+                                        <td
+                                            colSpan="6"
+                                            className="text-center text-muted py-4"
+                                        >
+                                            No classrooms selected
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    selectedClassrooms.map(classroom => (
+                                        <tr key={classroom.id}>
+                                            <td>{classroom.Name}</td>
+                                            <td>{classroom.Type}</td>
+                                            <td>{String(classroom.Capacity)}</td>
+                                            <td>{classroom.Location}</td>
+                                            <td>{String(classroom.Available) ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}</td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    onClick={() => removeClassrooms(classroom.id)}
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div className="col-lg-6 mt-5">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h3 style={{color: '#2c72d9'}}>4. Timeslots</h3>
+                            <Select
+                                onMenuOpen={() => markVisited('pg4')}
+                                openMenuOnFocus={() => markVisited('pg4')}
+                                options={optionsTimeslots}
+                                placeholder="Search and Select a Classroom"
+                                onChange={handleTimeslotSelect}
+                            >
+                            </Select>
+                        </div>
+                        <table className="table table-hover align-middle mt-2 ">
+                            <thead>
+                                <tr>
+                                    <th className='text-muted'>Day</th>
+                                    <th className='text-muted'>Start</th>
+                                    <th className='text-muted'>End</th>
+                                    <th className='text-muted'>Duration</th>
+                                    <th className='text-muted'>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedTimeslots.length === 0 ? (
+                                    <tr>
+                                        <td
+                                            colSpan="6"
+                                            className="text-center text-muted py-4"
+                                        >
+                                            No timeslot selected
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    selectedTimeslots.map(timeslot => (
+                                        <tr key={timeslot.id}>
+                                            <td>{timeslot.Day}</td>
+                                            <td>{timeslot.Start_time}</td>
+                                            <td>{String(timeslot.End_time)}</td>
+                                            <td>{timeslot.Duration[1]} hr{'(s)'}</td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    onClick={() => removeTimeslots(timeslot.id)}
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div className="p-3 d-flex mt-3 form-control justify-content-center">
+                        <button 
+                        className='btn btn-primary fw-bold'
+                        onClick={() => markVisited('pg5')}>Generate Schedule</button>
                     </div>
                 </div>
             </div>
