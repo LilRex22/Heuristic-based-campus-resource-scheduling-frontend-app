@@ -3,10 +3,27 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 function Classrooms(){
+    const location = useLocation()
+    const [allClassrooms, setAllClassrooms] = useState([])
+
+    useEffect(()=>{
+        const fetchClassrooms = async ()=>{
+            try{
+                const response = await axios.get('http://localhost:8000/api/classrooms/')
+                setAllClassrooms(response.data)
+            }catch(error){
+                console.log('Error fetching classrooms:', error)
+            }
+        };
+        fetchClassrooms()
+    }, [location.pathname])
+    
     return (
         <>  
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -41,28 +58,32 @@ function Classrooms(){
             <div className='p-3' style={{color: '#0b1c30'}}>
                 <h1 className='fw-bold'>Classrooms</h1>
 
-                <p className='mt-5 fw-bold text-muted'>0 TOTAL CLASSROOMS</p>
+                <p className='mt-5 fw-bold text-muted'>{allClassrooms.length} TOTAL CLASSROOMS</p>
                 {/* the classrooms */}
                 <Link className='text-decoration-none' style={{color: '#0b1c30'}}>
-                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}}>
-                        <div className="d-flex align-items-center">
-                            <div className="border rounded-4 p-4" style={{backgroundColor: '#d3e4fe', width: 'fit-content'}}>
-                                <img width="50" height="50" src="https://img.icons8.com/ios/50/auditorium.png" alt="auditorium"/>
+                    {allClassrooms.map((cl)=>{
+                        return (
+                            <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}} key={cl.id}>
+                                <div className="d-flex align-items-center">
+                                    <div className="border rounded-4 p-4" style={{backgroundColor: '#d3e4fe', width: 'fit-content'}}>
+                                        <img width="50" height="50" src="https://img.icons8.com/ios/50/auditorium.png" alt="auditorium"/>
+                                    </div>
+                                    <h2 className='ms-4 p-3' style={{borderLeft: '2px solid rgba(11, 28, 48, 0.25)'}}>{cl.Name}</h2>
+                                </div>
+                                <div className="">
+                                    <p>
+                                        <i className='bi bi-geo-alt-fill me-2'></i>
+                                        {cl.Location}
+                                    </p>
+                                    <i className='bi bi-person-fill me-2'></i>{cl.Capacity} seats
+                                </div>
+                                <div className="p-2 border rounded-2" style={{backgroundColor: String(cl.Available) ? 'rgb(157, 255, 157)' : '#ff7575'}}>
+                                    {String(cl.Available) ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
+                                </div>
+                                <i className='bi bi-arrow-right fs-2'></i>
                             </div>
-                            <h2 className='ms-4'>Maths Hall</h2>
-                        </div>
-                        <div className="">
-                            <p>
-                                <i className='bi bi-geo-alt-fill'></i>
-                                Science Village.
-                            </p>
-                            <i className='bi bi-person-fill'></i>200 seats
-                        </div>
-                        <div className="p-2 border rounded-2" style={{backgroundColor: 'rgb(127, 221, 127)'}}>
-                            AVAILABLE
-                        </div>
-                        <i className='bi bi-arrow-right fs-2'></i>
-                    </div>
+                        )
+                    })}
                 </Link>
 
                 <div className="" style={{marginTop: '200px'}}>

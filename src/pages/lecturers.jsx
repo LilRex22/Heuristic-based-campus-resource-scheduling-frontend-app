@@ -3,8 +3,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 
 function Lecturers(){
@@ -13,6 +14,38 @@ function Lecturers(){
         const randIndex =  Math.floor( Math.random() * randColors.length);
         return  randColors[randIndex];
     })
+
+    const location = useLocation()
+    const [allLecturers, setAllLecturers] = useState([])
+
+    // the function for getting the lecturer initials
+        function getInitials(fullName) {
+            const names = fullName
+                .trim()
+                .split(/\s+/)
+                .filter(word => !word.endsWith('.'));
+    
+            if (names.length === 1) {
+                return names[0][0].toUpperCase();
+            }
+    
+            return (
+                names[0][0] +
+                names[names.length - 1][0]
+            ).toUpperCase();
+        }
+
+    useEffect(()=>{
+        const fetchLecturers = async ()=>{
+            try{
+                const response = await axios.get('http://localhost:8000/api/lecturers/')
+                setAllLecturers(response.data)
+            }catch(error){
+                console.log('Error fetching lecturers:', error)
+            }
+        };
+        fetchLecturers()
+    }, [location.pathname])
 
     return (
         <>  
@@ -50,31 +83,36 @@ function Lecturers(){
                 <div className="text-muted fw-bold p-2 rounded-2" style={{backgroundColor: '#d3e4fe'}}>REGISTRAR OFFICE</div>
             </div>
             <div className="p-3">
-                <p className='text-muted fw-bold'>0 TOTAL LECTURERS</p>
+                <p className='text-muted fw-bold'>{allLecturers.length} TOTAL LECTURERS</p>
 
                 <Link className='text-decoration-none' style={{color: '#0b1c30'}}>
-                    <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}}>
-                        <div className="d-flex align-items-center">
-                            <div className="p-4 rounded-4 text-white" style={{backgroundColor: randColor}}>
-                                <h4 className='fw-bold fs-1'>JD</h4>
-                            </div>
-                            <div className="ms-4 d-flex flex-column">
-                                <h3 className='fw-bold mb-2'>Mr. John Doe</h3>
-                                <p className='text-muted'>COMPUTER SCIENCE</p>
-                            </div>
-                        </div>
-                        <div className="">
-                            <div className="d-flex align-items-center">
-                                <div className="">
-                                    <div className="p-2 border rounded-2" style={{backgroundColor: 'rgb(127, 221, 127)'}}>
-                                        AVAILABLE
+                    {allLecturers.map((lecturer)=>{
+                        return(
+                            <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}} key={lecturer.id}>
+                                <div className="d-flex align-items-center">
+                                    <div className="p-4 rounded-4 text-white" style={{backgroundColor: randColor}}>
+                                        <h4 className='fw-bold fs-1'>{getInitials(lecturer.Name)}</h4>
                                     </div>
-                                    <i className='bi bi-journal fs-1'></i>
+                                    <div className="ms-4 d-flex flex-column">
+                                        <h3 className='fw-bold mb-2'>{lecturer.Name}</h3>
+                                        <p className='text-muted fw-bold'>{lecturer.Department}</p>
+                                    </div>
                                 </div>
-                                <i className='bi bi-arrow-right fs-2 ms-5'></i>
+                                <div className="">
+                                    <div className="d-flex align-items-center">
+                                        <div className="text-center d-flex align-items-center gap-3">
+                                            <div className="p-2 border rounded-2 h-50" style={{backgroundColor: 'rgb(127, 221, 127)'}}>
+                                                {String(lecturer.Available) ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
+                                            </div>
+                                            <i className='bi bi-journal fs-1'></i>
+                                        </div>
+                                        <i className='bi bi-arrow-right fs-2 ms-5'></i>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                        
+                    })}
                 </Link>
             </div>
         </>

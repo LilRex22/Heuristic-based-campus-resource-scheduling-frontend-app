@@ -134,7 +134,7 @@ function Schedule() {
         try {
                 const response = await axios.get('http://localhost:8000/api/courses/');
                 console.log(response.data)
-                setAvailableCourses(response.data);
+                setAvailableCourses(response.data.courses);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
@@ -203,7 +203,6 @@ function Schedule() {
         { No: '5', Name: 'Review & Generate', id: 'pg5', Description: 'Step Five: Click on the Generate button to apply the heuristic algorithm on the set constraints to create an optimized schedule.'}
     ]
 
-
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -256,7 +255,7 @@ function Schedule() {
                             <small>Department</small><br />
                             <p className='text-muted fw-bold mt-3'>
                                 <i className='bi bi-house-fill me-2'></i>
-                                Computer Science
+                                {}
                             </p>
                         </div>
                     </div>
