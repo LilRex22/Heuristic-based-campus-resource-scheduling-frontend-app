@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 
 
@@ -13,6 +14,8 @@ function SignUp(){
         confirm_password: ''
     });
 
+    const [error, setError] = useState({});
+
     // update the form data when the user types in the input fields
     const handleChange = (e) => {
         setFormData({
@@ -23,6 +26,52 @@ function SignUp(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError({}); // Clear previous errors
+
+        if (formData.password !== formData.confirm_password ) {
+            setError({
+                confirm_password: ["Passwords do not match."]
+            });
+            return;
+        }
+
+        if (formData.password === '' ) {
+            setError({
+                password: ["Password is required."]
+            });
+            return;
+        }
+
+        if (formData.password.length < 8) {
+            setError({
+                password: ["Password must be at least 8 characters long."]
+            });
+            return;
+        }
+
+        if (formData.username === '' ) {
+            setError({
+                username: ["Username is required."]
+            });
+            return;
+        }
+
+        if (formData.department === '' ) {
+            setError({
+                department: ["Department is required."]
+            });
+            return;
+        }
+
+        try{
+            await axios.post('http://localhost:8000/api/register/', formData);
+            alert('Registration successful! Please log in.');
+        } catch (error) {
+            if(error.response?.data){
+                setError(error.response.data);
+            }
+            console.error("Error registering:", error.response?.data);
+        }
         console.log(formData);
     };
 
@@ -55,7 +104,9 @@ function SignUp(){
                             className="form-control mt-2 text-black-50 fw-bold" 
                             placeholder="Username" 
                             style={{backgroundColor: '#d3e4fe'}}/>
+                            {/* // displaying the errors */}
                         </div>
+                        {error.username && <p className="text-danger mt-1">{error.username[0]}</p>}
 
                         <div className="input-group-custom">
                             <label htmlFor="department" className="mt-4 fw-bold text-black-50">Department:</label>
@@ -68,6 +119,7 @@ function SignUp(){
                             placeholder="Department" 
                             style={{backgroundColor: '#d3e4fe'}} />
                         </div>
+                        {error.department && <p className="text-danger mt-1">{error.department[0]}</p>}
 
                         <div className="input-group-custom">
                             <label htmlFor="password" className="mt-4 fw-bold text-black-50">Your Password:</label>
@@ -81,6 +133,7 @@ function SignUp(){
                             style={{backgroundColor: '#d3e4fe'}} />
                             {/* <img width="50" height="50" src="https://img.icons8.com/material-outlined/50/lock.png" alt="lock"/> */}
                         </div>
+                        {error.password && <p className="text-danger mt-1">{error.password[0]}</p>}
 
                         <div className="input-group-custom">
                             <label htmlFor="confirm_password" className="mt-4 fw-bold text-black-50">Confirm Password:</label>
@@ -93,6 +146,7 @@ function SignUp(){
                             placeholder="Confirm Password" 
                             style={{backgroundColor: '#d3e4fe'}} />
                         </div>
+                        {error.confirm_password && <p className="text-danger mt-1">{error.confirm_password[0]}</p>}
 
                         <div className="input-group-custom position-relative">
                             <button onSubmit={handleSubmit} className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Sign Up</button>

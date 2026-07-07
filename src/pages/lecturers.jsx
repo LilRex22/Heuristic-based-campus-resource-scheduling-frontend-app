@@ -39,7 +39,7 @@ function Lecturers(){
         const fetchLecturers = async ()=>{
             try{
                 const response = await axios.get('http://localhost:8000/api/lecturers/')
-                setAllLecturers(response.data)
+                setAllLecturers(response.data.all_lecturers)
             }catch(error){
                 console.log('Error fetching lecturers:', error)
             }
@@ -90,7 +90,7 @@ function Lecturers(){
                         return(
                             <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}} key={lecturer.id}>
                                 <div className="d-flex align-items-center">
-                                    <div className="p-4 rounded-4 text-white" style={{backgroundColor: randColor}}>
+                                    <div className="p-4 rounded-4 text-white text-center" style={{backgroundColor: randColor, minWidth: '100px'}}>
                                         <h4 className='fw-bold fs-1'>{getInitials(lecturer.Name)}</h4>
                                     </div>
                                     <div className="ms-4 d-flex flex-column">
@@ -101,11 +101,11 @@ function Lecturers(){
                                 <div className="">
                                     <div className="d-flex align-items-center">
                                         <div className="text-center d-flex align-items-center gap-3">
-                                            <div className="p-2 border rounded-2 h-50" style={{backgroundColor: 'rgb(127, 221, 127)'}}>
-                                                {String(lecturer.Available) ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
+                                            <div className="p-2 border rounded-2 h-50" style={{backgroundColor: String(lecturer.Available)=='true' ? 'rgb(127, 221, 127)' : '#ff7878'}}>
+                                                {String(lecturer.Available)=='true' ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
                                             </div>
                                             <i className='bi bi-journal fs-1'></i>
-                                        </div>
+                                        </div>  
                                         <i className='bi bi-arrow-right fs-2 ms-5'></i>
                                     </div>
                                 </div>

@@ -25,6 +25,14 @@ function Courses(){
         fetchCourses();
     }, [location.pathname])
 
+    function noOfStudents() {
+        let n = 0;
+        allCourses.forEach(course => {
+            n += Number(course.Student);
+        });
+        console.log(n);
+        return n;
+    }
 
     return (
         <>
@@ -68,14 +76,13 @@ function Courses(){
                     </div>
                     <div className="col-lg-5 bg-white p-4 rounded-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}}>
                         <p className='text-muted fw-bold'>TOTAL ENROLLMENT</p>
-                        <p className='fs-1'>0</p>
+                        <p className='fs-1'>{noOfStudents()}</p>
                     </div>
                 </div>
 
                 {/* the courses */}
                 {allCourses.map((course)=>{
-                    {console.log(course)}
-                    return( 
+                    return (
                         <div className="p-4 rounded-3 bg-white mt-3 shadow" style={{color: '#0b1c30', border: '1px solid rgba(11, 28, 48, 0.25)'}} key={course.id}>
                             <div className="d-flex justify-content-between border-bottom p-2">
                                 <div className="">

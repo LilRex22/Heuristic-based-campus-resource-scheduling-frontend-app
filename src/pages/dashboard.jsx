@@ -1,21 +1,54 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function Dashboard() {
+    const [lecturers, setLecturers] = useState([]);
+    const [classrooms, setClassrooms] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [availableSlots, setAvailableSlots] = useState([]);
+
     const details = [
-        { Name: 'TOTAL LECTURERS', Icon: 'bi bi-person-fill' },
-        { Name: 'CLASSROOMS', Icon: 'bi bi-geo-alt-fill'},
-        { Name: 'COURSES', Icon: 'bi-journal-bookmark-fill'},
-        { Name: 'DEPARTMENTS', Icon: 'bi bi-building-fill'},
-        { Name: 'AVAILABLE SLOTS', Icon: 'bi bi-clock-fill'},
-        { Name: 'SUCCESS RATE', Icon: 'bi bi-patch-check-fill'}
+        { Name: 'TOTAL LECTURERS', Icon: 'bi bi-person-fill', 'value': Object.keys(lecturers).length },
+        { Name: 'TOTAL CLASSROOMS', Icon: 'bi bi-geo-alt-fill', 'value': Object.keys(classrooms).length },
+        { Name: 'TOTAL COURSES', Icon: 'bi-journal-bookmark-fill', 'value': courses },
+        // { Name: 'DEPARTMENTS', Icon: 'bi bi-building-fill'},
+        { Name: 'AVAILABLE CLASSROOMS', Icon: 'bi bi-clock-fill', 'value': Object.keys(availableSlots).length },
+        { Name: 'AVAILABLE LECTURERS', Icon: 'bi bi-clock-fill', 'value': Object.keys(availableSlots).length },
+        // { Name: 'SUCCESS RATE', Icon: 'bi bi-patch-check-fill', 'value': Object.keys(lecturers).length }
     ]
 
+    // details.map((e)=>{
+    //     console.log(Object.keys(e).length)
+    // })
     const workflow = [
         { img: 'https://img.icons8.com/color/48/square-border.png', step: 'STEP 1', title: 'Input Aggregation', text: ' Parsing constraints from lecturers, course loads, and room capacities.', bg: '#d3e4fe' },
         { img: 'https://img.icons8.com/doodle/50/apple-settings.png', step: 'STEP 2', title: 'Conflict Search', text: 'Identifying overlaps and resource competition within the proposed slots.', bg: '#0b1c30' },
         { img: 'https://img.icons8.com/badges/48/ai-chip.png', step: 'STEP 3', title: 'Heuristic Engine', text: 'Processing rules using Genetic algorithm to find the optimal global state.', bg: '#0b1c30' },
         { img: 'https://img.icons8.com/ios-filled/50/verified-account.png', step: 'STEP 4', title: 'Final Output', text: 'Ready-to-use timetable exportable in PDF, iCal, or Excel formats.', bg: 'rgb(127, 221, 127)' }
     ]
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const lecturersResponse = await axios.get('http://localhost:8000/api/lecturers/');
+                setLecturers(lecturersResponse.data.all_lecturers);
+                
+
+                const classroomsResponse = await axios.get('http://localhost:8000/api/classrooms/');
+                setClassrooms(classroomsResponse.data.all_rooms);
+
+
+                const coursesResponse = await axios.get('http://localhost:8000/api/courses/');
+                setCourses(coursesResponse.data.count);
+
+                setAvailableSlots(classroomsResponse.data.available_rooms);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <>  
@@ -39,15 +72,17 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div className="row mt-5">
+                <div className="row mt-5 justify-content-center gap-3">
                     { details.map(detail => {
                         return (
-                            <div className="col-lg-2 border rounded-2 bg-white" key={detail.Name}>
+                            <div className="col-lg-2 border rounded-2 bg-white" key={detail.Name} >
                                 <div className="p-2 my-2 border rounded-2" style={{backgroundColor: '#d3e4fe', width: 'fit-content'}}>
                                     <i className={detail.Icon}></i>
                                 </div>
-                                <p className="fw-bold text-muted mt-3">{detail.Name}</p>
-                                <p className="fs-1">0</p>
+                                <div className="" style={{height: '30%'}}>
+                                    <p className="fw-bold text-muted mt-3">{detail.Name}</p>
+                                </div>
+                                <p className="fs-1">{detail.value}</p>
                             </div>
                         )
                     })}

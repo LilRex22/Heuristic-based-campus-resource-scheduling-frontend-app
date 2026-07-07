@@ -149,7 +149,7 @@ function Schedule() {
         try {
                 const response = await axios.get('http://localhost:8000/api/lecturers/');
                 console.log(response.data)
-                setAvailableLecturers(response.data);
+                setAvailableLecturers(response.data.all_lecturers);
             } catch (error) {
                 console.error('Error fetching lecturers:', error);
             }
@@ -179,7 +179,7 @@ function Schedule() {
             try {
                 const response = await axios.get('http://localhost:8000/api/classrooms/');
                 console.log(response.data)
-                setAvailableClassrooms(response.data);
+                setAvailableClassrooms(response.data.all_rooms);
             } catch (error) {
                 console.error('Error fetching classrooms:', error);
             }
@@ -395,7 +395,7 @@ function Schedule() {
                                         <tr key={lecturer.id}>
                                             <td>{lecturer.Name}</td>
                                             <td>{lecturer.Department}</td>
-                                            <td>{String(lecturer.Available)}</td>
+                                            <td>{String(lecturer.Available)=='true' ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}</td>
                                             <td>
                                                 <button
                                                     className="btn btn-sm btn-outline-danger"
@@ -451,7 +451,7 @@ function Schedule() {
                                             <td>{classroom.Type}</td>
                                             <td>{String(classroom.Capacity)}</td>
                                             <td>{classroom.Location}</td>
-                                            <td>{String(classroom.Available) ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}</td>
+                                            <td>{String(classroom.Available)=='true' ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}</td>
                                             <td>
                                                 <button
                                                     className="btn btn-sm btn-outline-danger"

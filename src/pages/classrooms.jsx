@@ -16,7 +16,7 @@ function Classrooms(){
         const fetchClassrooms = async ()=>{
             try{
                 const response = await axios.get('http://localhost:8000/api/classrooms/')
-                setAllClassrooms(response.data)
+                setAllClassrooms(response.data.all_rooms)
             }catch(error){
                 console.log('Error fetching classrooms:', error)
             }
@@ -77,8 +77,8 @@ function Classrooms(){
                                     </p>
                                     <i className='bi bi-person-fill me-2'></i>{cl.Capacity} seats
                                 </div>
-                                <div className="p-2 border rounded-2" style={{backgroundColor: String(cl.Available) ? 'rgb(157, 255, 157)' : '#ff7575'}}>
-                                    {String(cl.Available) ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
+                                <div className="p-2 border rounded-2" style={{backgroundColor: String(cl.Available)=='true' ? 'rgb(157, 255, 157)' : '#ff7575'}}>
+                                    {String(cl.Available)=='true' ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
                                 </div>
                                 <i className='bi bi-arrow-right fs-2'></i>
                             </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 
 
 
@@ -19,11 +19,21 @@ function Login(){
         });
     };
 
-    const handleSubmit = async (e) => {
+    // the login logic
+    const logUserIn = async (e) =>{
         e.preventDefault();
-        console.log(formData);
-    };
-
+        try{
+            const response = await axios.post('http://localhost:8000/api/token/', {
+                username: formData.username,
+                password: formData.password
+            });
+            localStorage.setItem("access", response.data.access);
+            localStorage.setItem("refresh", response.data.refresh);
+            console.log('login sucessful!')
+        }catch (error){
+            console.error('login failed:', error.response.data)
+        }
+    }
 
     return (
         <>
@@ -32,7 +42,7 @@ function Login(){
                 <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>
                 <p>Resource Scheduler Login</p>
 
-                <form className="form-control p-4" onSubmit={handleSubmit} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
+                <form className="form-control p-4" onSubmit={logUserIn} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
                     <div className="">
                         <p className="fs-5 fw-bold">LOGIN AS</p>
                         <div className="">
@@ -69,7 +79,7 @@ function Login(){
                         </div>
 
                         <div className="input-group-custom position-relative">
-                            <button onSubmit={handleSubmit} className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Sign In to Dashboard</button>
+                            <button onSubmit={logUserIn} className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Sign In to Dashboard</button>
                             <i className="bi bi-arrow-right text-white position-absolute" style={{left: '66%', top: '68%'}}></i>
                         </div>
                         <p className="text-center mt-3 ">New to the campus platform? <Link to="/signup" className="text-decoration-none" style={{color: '#0059ba'}}>Sign Up</Link></p>
