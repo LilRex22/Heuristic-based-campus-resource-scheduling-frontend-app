@@ -17,6 +17,7 @@ function Lecturers(){
 
     const location = useLocation()
     const [allLecturers, setAllLecturers] = useState([])
+    console.log(allLecturers)
 
     // the function for getting the lecturer initials
         function getInitials(fullName) {
@@ -70,7 +71,7 @@ function Lecturers(){
                                 <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
                             </Form>
 
-                            <Link variant="outline-primary" className='text-decoration-none btn btn-secondary' style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ 
+                            <Link to='./add' variant="outline-primary" className='text-decoration-none btn btn-secondary' style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ 
                                 <i className='bi bi-person-fill me-2 ms-1'></i>
                                 Add Lecturer
                             </Link>

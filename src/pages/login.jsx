@@ -27,9 +27,10 @@ function Login(){
                 username: formData.username,
                 password: formData.password
             });
+            console.log(response.data)
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
-            console.log('login sucessful!')
+            alert('login sucessful!')
         }catch (error){
             console.error('login failed:', error.response.data)
         }
