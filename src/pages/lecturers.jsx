@@ -96,7 +96,7 @@ function Lecturers(){
                                     </div>
                                     <div className="ms-4 d-flex flex-column">
                                         <h3 className='fw-bold mb-2'>{lecturer.Name}</h3>
-                                        <p className='text-muted fw-bold'>{lecturer.Department}</p>
+                                        <p className='text-muted fw-bold'>{lecturer.department_Name}</p>
                                     </div>
                                 </div>
                                 <div className="">

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 function SignUp(){
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         role: 'student',
         username: '',
@@ -66,6 +68,7 @@ function SignUp(){
         try{
             await axios.post('http://localhost:8000/api/register/', formData);
             alert('Registration successful! Please log in.');
+            navigate('/login');
         } catch (error) {
             if(error.response?.data){
                 setError(error.response.data);

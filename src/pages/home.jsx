@@ -1,6 +1,21 @@
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../components/auth";
+
+
+
 
 function Home(){
+    const navigate = useNavigate();
     const imgs=['src/assets/me.png', 'src/assets/me2.png', 'src/assets/bijin.jpg', 'src/assets/10062.jpg'];
+    
+    const handleGetStarted = () => {
+        if (isAuthenticated()) {
+            navigate("/dashboard");
+        } else {
+            navigate("/login");
+        }
+    };
+
     return (
         <>
             <div className="container-fluid hero d-flex align-items-center" style={{height: '100vh'}}>
@@ -16,8 +31,8 @@ function Home(){
                             maximize facility utilization with a single click.
                         </p>
                         <div className="container ps-0 mt-4">
-                            <a href="#" className="btn btn-primary border-0" style={{backgroundColor: '#0059ba', color: 'white'}}>Get Started</a>
-                            <a href="#" className="btn btn-primary ms-2 fw-bold border-0" style={{backgroundColor: 'white', color: '#0059ba'}}>View Dashboard</a>
+                            <button onClick={handleGetStarted} className="btn btn-primary border-0" style={{backgroundColor: '#0059ba', color: 'white'}}>Get Started</button>
+                            <a href="#" className="btn btn-primary ms-2 fw-bold border-0" style={{backgroundColor: 'white', color: '#0059ba'}}>User Guide</a>
                         </div>
                         <div className="mt-5">
                             <div className="mt-3 d-flex  " style={{width: 'fit-content'}}>
@@ -156,7 +171,7 @@ function Home(){
                         simplified their schedules.
                     </p>
                     <div className="ps-0 mt-5">
-                        <a href="#" className="btn btn-primary border-0" style={{backgroundColor: '#0059ba', color: 'white'}}>Start Scheduling</a>
+                        <button onClick={() => (isAuthenticated()) ? navigate('/schedule') : navigate('/login')} className="btn btn-primary border-0" style={{backgroundColor: '#0059ba', color: 'white'}}>Start Scheduling</button>
                         {/* <a href="#" className="btn btn-primary ms-2 fw-bold" style={{border: 'none', backgroundColor: 'white', color: '#0059ba'}}>View Dashboard</a> */}
                     </div>
                 </div>

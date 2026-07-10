@@ -5,16 +5,17 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useState } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
-import Select from "react-select";
 
-function AddLecturers() {
-    const [departments, setDepartments] = useState([]);
+
+function AddClassrooms() {
+    // const [classrooms, setClassrooms] = useState([]);
     const [error, setError] = useState({});
 
     const [formData, setFormData] = useState({
         Name: "",
-        Department: ""
+        Type: "",
+        Capacity: "",
+        Location: ""
     })
 
     const handleChange = (e) => {
@@ -34,9 +35,21 @@ function AddLecturers() {
             });
             return;
         }
-        if (formData.Department === '') {
+        if (formData.Type === '') {
             setError({
-                Department:["Department is required."],
+                Type:["Type is required."],
+            });
+            return;
+        }
+        if (formData.Capacity === '') {
+            setError({
+                Capacity:["Capacity is required."],
+            });
+            return;
+        }
+        if (formData.Location === '') {
+            setError({
+                Location:["Location is required."],
             });
             return;
         }
@@ -45,7 +58,7 @@ function AddLecturers() {
             console.log(formData)
             const token = localStorage.getItem("access");
             const response = await axios.post(
-                "http://localhost:8000/api/lecturers/add/",
+                "http://localhost:8000/api/classrooms/add/",
                 formData,
                 {
                     headers: {
@@ -54,12 +67,14 @@ function AddLecturers() {
                 }
             );
             console.log(response)
-            alert("Lecturer added successfullly");
+            alert("Classroom added successfully");
 
             // clear the form
             setFormData({
                 Name: '',
-                Department: ''
+                Type: '',
+                Capacity: '',
+                Location: ''
             })
 
         }catch (err){
@@ -67,25 +82,6 @@ function AddLecturers() {
         }
         
     };
-
-    useEffect(() => {
-            const getDepartments = async () => {
-                try {
-                    const response = await axios.get(
-                        "http://localhost:8000/api/departments/"
-                    );
-                    setDepartments(response.data);
-                } catch(error) {
-                    console.log(error);
-                }
-            };
-            getDepartments();
-    }, []);
-
-    const departmentOptions = departments.map((department)=>({
-        value: department.id,
-        label: department.Name
-    }));
 
     return (
         <>
@@ -115,7 +111,7 @@ function AddLecturers() {
             </Navbar>
 
             <div className="p-3">
-                <h2 className='fw-bold'>Add a Lecturer</h2>
+                <h2 className='fw-bold'>Add a Classroom</h2>
 
                     <div className="d-flex flex-column align-items-center">
                     <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
@@ -124,35 +120,55 @@ function AddLecturers() {
                     <form className="form-control p-4" onSubmit={handleSubmit} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
                         <div className="">
                             <div className="input-group-custom">
-                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Full Name:</label>
-                                <i className="bi bi-person-fill"></i>
+                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Name:</label>
+                                <i className="bi bi-building-fill"></i>
                                 <input type="text" 
                                 name="Name"
                                 onChange={handleChange} 
                                 className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="Fullname e.g Dr. John Adams" 
+                                placeholder="e.g. Room 101" 
                                 style={{backgroundColor: '#d3e4fe'}}/>
                             </div>
                             {error.Name && <p className="text-danger mt-1">{error.Name[0]}</p>}
 
-                            <div className="mt-3">
-                                <Select
-                                    options={departmentOptions}
-                                    placeholder="Search Department..."
-                                    onChange={(selectedOption)=>{
-                                        console.log(selectedOption);
-                                        setFormData({
-                                            ...formData,
-                                            Department: selectedOption.value
-                                        });
-
-                                    }}
-                                />
+                            <div className="input-group-custom">
+                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Type:</label>
+                                <i className="bi bi-door-open-fill"></i>
+                                <input type="text" 
+                                name="Type"
+                                onChange={handleChange} 
+                                className="form-control mt-2 text-black-50 fw-bold" 
+                                placeholder="e.g. Lecture Hall" 
+                                style={{backgroundColor: '#d3e4fe'}}/>
                             </div>
-                            {error.Department && <p className="text-danger mt-1">{error.Department[0]}</p>}
+                            {error.Type && <p className="text-danger mt-1">{error.Type[0]}</p>}
+                            
+                            <div className="input-group-custom">
+                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Capacity:</label>
+                                <i className="bi bi-person-fill"></i>
+                                <input type="number" 
+                                name="Capacity"
+                                onChange={handleChange} 
+                                className="form-control mt-2 text-black-50 fw-bold" 
+                                placeholder="e.g. 200" 
+                                style={{backgroundColor: '#d3e4fe'}}/>
+                            </div>
+                            {error.Capacity && <p className="text-danger mt-1">{error.Capacity[0]}</p>}
+
+                            <div className="input-group-custom">
+                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Location:</label>
+                                <i className="bi bi-geo-alt-fill"></i>
+                                <input type="text" 
+                                name="Location"
+                                onChange={handleChange} 
+                                className="form-control mt-2 text-black-50 fw-bold" 
+                                placeholder="e.g. Science Block" 
+                                style={{backgroundColor: '#d3e4fe'}}/>
+                            </div>
+                            {error.Location && <p className="text-danger mt-1">{error.Location[0]}</p>}
 
                             <div className="input-group-custom position-relative">
-                                <button type='Submit' className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Add Lecturer</button>
+                                <button type='Submit' className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Add Classroom</button>
                                 <i className="bi bi-arrow-right text-white position-absolute" style={{left: '66%', top: '68%'}}></i>
                             </div>
                         </div>
@@ -163,4 +179,4 @@ function AddLecturers() {
     );
 }
 
-export default AddLecturers;
+export default AddClassrooms;

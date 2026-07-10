@@ -33,7 +33,7 @@ function Schedule() {
 
     const optionsClassrooms = availableClassrooms.map((classroom)=>({ value: classroom.id, label: classroom.Name, capacity: classroom.Capacity, type: classroom.Type, avail: classroom.Available }));
 
-    const optionsTimeslots = availableTimeslots.map((timeslot)=>({ value: timeslot.id, label: timeslot.Day, start: timeslot.Start_time, end: timeslot.End_time, duration: timeslot.Duration}))
+    const optionsTimeslots = availableTimeslots.map((timeslot)=>({ value: timeslot.id, label: `${timeslot.Day}: ${timeslot.Start_time} - ${timeslot.End_time}`, start: timeslot.Start_time, end: timeslot.End_time, duration: timeslot.Duration}))
 
     
     // for selecting courses
@@ -480,7 +480,7 @@ function Schedule() {
                             >
                             </Select>
                         </div>
-                        <table className="table table-hover align-middle mt-2 ">
+                        <table className="table table-hover align-middle mt-2">
                             <thead>
                                 <tr>
                                     <th className='text-muted'>Day</th>

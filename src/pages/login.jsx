@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
 function Login(){
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         role: 'student',
         username: '',
@@ -31,6 +34,7 @@ function Login(){
             localStorage.setItem("access", response.data.access);
             localStorage.setItem("refresh", response.data.refresh);
             alert('login sucessful!')
+            navigate('/dashboard')
         }catch (error){
             console.error('login failed:', error.response.data)
         }
