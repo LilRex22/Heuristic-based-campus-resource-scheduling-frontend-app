@@ -5,11 +5,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useState } from 'react';
 import axios from 'axios';
+import MessageBox from "../components/messageBox";
 
 
 function AddClassrooms() {
     // const [classrooms, setClassrooms] = useState([]);
     const [error, setError] = useState({});
+    const [message, setMessage] = useState(null);
 
     const [formData, setFormData] = useState({
         Name: "",
@@ -67,7 +69,10 @@ function AddClassrooms() {
                 }
             );
             console.log(response)
-            alert("Classroom added successfully");
+            setMessage({
+                text: "Classroom added successfully!",
+                type: "success"
+            });
 
             // clear the form
             setFormData({
@@ -78,7 +83,12 @@ function AddClassrooms() {
             })
 
         }catch (err){
+            console.log(err.response.data)
             setError(err.response.data)
+            setMessage({
+                text: err.response.data.Name || "An error occurred while adding the classroom.",
+                type: "error"
+            });
         }
         
     };
@@ -112,7 +122,13 @@ function AddClassrooms() {
 
             <div className="p-3">
                 <h2 className='fw-bold'>Add a Classroom</h2>
-
+                    {message && (
+                        <MessageBox
+                            message={message.text}
+                            type={message.type}
+                            onClose={() => setMessage(null)}
+                        />
+                    )}
                     <div className="d-flex flex-column align-items-center">
                     <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
                     <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>

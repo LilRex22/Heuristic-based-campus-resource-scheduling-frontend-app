@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login(){
     const navigate = useNavigate();
+    const [error, setError] = useState({});
 
     const [formData, setFormData] = useState({
         role: 'student',
@@ -25,6 +26,7 @@ function Login(){
     // the login logic
     const logUserIn = async (e) =>{
         e.preventDefault();
+        setError({})
         try{
             const response = await axios.post('http://localhost:8000/api/token/', {
                 username: formData.username,
@@ -36,7 +38,10 @@ function Login(){
             alert('login sucessful!')
             navigate('/dashboard')
         }catch (error){
-            console.error('login failed:', error.response.data)
+            if(error.response?.data){
+                setError(error.response.data);
+            }
+            console.error('login failed:', error.response.data.detail)
         }
     }
 
@@ -47,6 +52,7 @@ function Login(){
                 <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>
                 <p>Resource Scheduler Login</p>
 
+                {error.detail && <p className="text-danger mt-1">{error.detail}</p>}
                 <form className="form-control p-4" onSubmit={logUserIn} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
                     <div className="">
                         <p className="fs-5 fw-bold">LOGIN AS</p>

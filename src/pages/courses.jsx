@@ -57,7 +57,7 @@ function Courses(){
                                 <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
                             </Form>
 
-                            <Link variant="outline-primary" className='text-decoration-none btn btn-secondary' style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ 
+                            <Link to='./add' variant="outline-primary" className='text-decoration-none btn btn-secondary' style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ 
                                 <i className='bi bi-book-fill me-2 ms-1'></i>
                                 Add Course
                             </Link>
@@ -90,13 +90,13 @@ function Courses(){
                                     <h2 className='fw-bold'>{course.Course_title}</h2>
                                 </div>
                                 <div className="">
-                                    <p className='p-2 rounded-5 fw-bold' style={{backgroundColor: '#ffb873', width: 'fit-content', color: '#6a3b00'}}>{course.Level} Level</p>
+                                    <p className='p-2 rounded-5 fw-bold' style={{backgroundColor: '#ffb873', width: 'fit-content', color: '#6a3b00'}}>{course.level_Name} Level</p>
                                 </div>
                             </div>
                             <div className="mt-2 d-flex justify-content-between">
                                 <p className='fs-4 text-muted'>
                                     <i className='bi bi-person-fill fs-3 me-2'></i>
-                                    {course.Lecturer}
+                                    {course.lecturer_Name}
                                 </p>
                                 <p className='fs-4 text-muted'>
                                     <i className='bi bi-people-fill fs-3 me-2'></i>

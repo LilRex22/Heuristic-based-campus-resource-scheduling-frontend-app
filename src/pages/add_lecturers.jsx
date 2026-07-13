@@ -7,10 +7,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Select from "react-select";
+import MessageBox from "../components/messageBox";
 
 function AddLecturers() {
     const [departments, setDepartments] = useState([]);
     const [error, setError] = useState({});
+    const [message, setMessage] = useState(null);
 
     const [formData, setFormData] = useState({
         Name: "",
@@ -54,7 +56,10 @@ function AddLecturers() {
                 }
             );
             console.log(response)
-            alert("Lecturer added successfullly");
+            setMessage({
+                text: "Lecturer added successfully!",
+                type: "success"
+            });
 
             // clear the form
             setFormData({
@@ -64,6 +69,10 @@ function AddLecturers() {
 
         }catch (err){
             setError(err.response.data)
+            setMessage({
+                text: err.response.data.Name || "An error occurred while adding the lecturer.",
+                type: "error"
+            });
         }
         
     };
@@ -116,7 +125,13 @@ function AddLecturers() {
 
             <div className="p-3">
                 <h2 className='fw-bold'>Add a Lecturer</h2>
-
+                    {message && (
+                        <MessageBox
+                            message={message.text}
+                            type={message.type}
+                            onClose={() => setMessage(null)}
+                        />
+                    )}
                     <div className="d-flex flex-column align-items-center">
                     <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
                     <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>

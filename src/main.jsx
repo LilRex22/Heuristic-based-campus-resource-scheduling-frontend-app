@@ -15,6 +15,7 @@ import Schedule from './pages/schedule';
 import AddLecturers from './pages/add_lecturers';
 import DashboardLayout from './components/dashboardLayout';
 import AddClassrooms from './pages/add_classrooms';
+import AddCourses from './pages/add_courses';
 // our custom css file
 
 
@@ -36,6 +37,7 @@ function App() {
               <Route path='lecturers' element={<Lecturers />} />
               <Route path='lecturers/add' element={<AddLecturers />}/>
               <Route path='classrooms/add' element={<AddClassrooms />}/>
+              <Route path='courses/add' element={<AddCourses />}/>
               <Route path='classrooms' element={<Classrooms />} />
               <Route path='courses' element={<Courses />} />
               <Route path='schedule' element={<Schedule />} />
