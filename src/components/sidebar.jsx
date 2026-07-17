@@ -21,7 +21,10 @@ function Sidebar() {
     // only visible on large screens: hidden on xs-md, shows as flex on lg+
     <aside className="d-none d-lg-flex flex-column sidebar" style={{ borderRadius: '0' }}>
         <div className="sidebar-brand pb-3 py-2">
-            <img src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="logo" width="28" height="28" />
+            <div className="px-2 p-1 rounded-2" style={{backgroundColor: '#e8a33d'}}>
+                <i className="bi-mortarboard-fill fs-4"></i>
+            </div>
+            
             <span className="fw-bold" style={{ color: '#0059ba' }}>Smart<span style={{ color: '#213145' }}>Slot</span></span>
         </div>
 

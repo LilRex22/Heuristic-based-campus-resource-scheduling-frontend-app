@@ -8,6 +8,39 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Select from "react-select";
 import MessageBox from "../components/messageBox";
+import '../components/AddClassrooms.css';
+
+// styling passed straight to react-select's `styles` prop so the dropdown
+// matches the brand (react-select can't be themed with plain CSS alone).
+// Purely presentational — none of the onChange logic changes.
+const selectStyles = {
+    control: (base, state) => ({
+        ...base,
+        borderColor: state.isFocused ? '#1b2340' : '#e7e2d6',
+        backgroundColor: '#faf8f3',
+        borderRadius: 10,
+        minHeight: 48,
+        boxShadow: 'none',
+        fontSize: '0.9rem',
+    }),
+    placeholder: (base) => ({ ...base, color: '#6b7280' }),
+    menu: (base) => ({
+        ...base,
+        borderRadius: 10,
+        overflow: 'hidden',
+        border: '1px solid #e7e2d6',
+        boxShadow: '0 8px 24px rgba(27,35,64,0.1)',
+    }),
+    option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isSelected
+            ? '#e8a33d'
+            : state.isFocused
+            ? '#fdf3e2'
+            : '#fff',
+        color: '#1b2340',
+    }),
+};
 
 function AddLecturers() {
     const [departments, setDepartments] = useState([]);
@@ -98,79 +131,86 @@ function AddLecturers() {
 
     return (
         <>
-            <Navbar expand="lg" className="bg-body-tertiary">
-                <Container fluid>
-                    <Navbar.Toggle aria-controls="navbarScroll" />
-                    <Navbar.Collapse id="navbarScroll">
-                        <Nav
-                            className="me-auto my-2 my-lg-0 w-100 d-flex justify-content-between"
-                            style={{ maxHeight: '100px' }}
-                            navbarScroll
-                        >
-                            <Form className="d-flex position-relative">
-                                <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>
-                                <Form.Control
-                                type="search"
-                                placeholder="Search Lecturers..."
-                                className=" me-2 border-0"
-                                aria-label="Search"
-                                style={{backgroundColor: '#EDF0FF',borderRadius: '20px', width: '300px', paddingLeft: '35px'}}
-                                />
-                                <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
-                            </Form>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <div className="ac-shell">
+                <Navbar expand="lg" className="ac-navbar bg-body-tertiary">
+                    <Container fluid>
+                        <Navbar.Toggle aria-controls="navbarScroll" />
+                        <Navbar.Collapse id="navbarScroll">
+                            <Nav
+                                className="me-auto my-2 my-lg-0 w-100 d-flex justify-content-between"
+                                style={{ maxHeight: '100px' }}
+                                navbarScroll
+                            >
+                                <Form className="ac-search-form d-flex position-relative">
+                                    <i className="bi bi-search position-absolute" style={{ left: '14px', top: '50%', transform: 'translateY(-50%)' }}></i>
+                                    <Form.Control
+                                    type="search"
+                                    placeholder="Search Lecturers..."
+                                    className="ac-search-input me-2 border-0"
+                                    aria-label="Search"
+                                    />
+                                    <Button variant="outline-primary" className="ac-search-btn">Search</Button>
+                                </Form>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
 
-            <div className="p-3">
-                <h2 className='fw-bold'>Add a Lecturer</h2>
-                    {message && (
-                        <MessageBox
-                            message={message.text}
-                            type={message.type}
-                            onClose={() => setMessage(null)}
-                        />
-                    )}
-                    <div className="d-flex flex-column align-items-center">
-                    <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
-                    <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>
+                <h2 className='ac-page-heading'>Add a Lecturer</h2>
 
-                    <form className="form-control p-4" onSubmit={handleSubmit} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
-                        <div className="">
-                            <div className="input-group-custom">
-                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Full Name:</label>
+                {message && (
+                    <MessageBox
+                        message={message.text}
+                        type={message.type}
+                        onClose={() => setMessage(null)}
+                    />
+                )}
+
+                <div className="ac-body">
+                    <div className="ac-brand-mark">
+                        <i className="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h1 className="ac-brand-name"><span className="ac-brand-accent">Smart</span> Slot</h1>
+                    <p className="ac-brand-sub">Register a new lecturer for scheduling</p>
+
+                    <form className="ac-card" onSubmit={handleSubmit}>
+                        <div className="ac-field-group">
+                            <label htmlFor="Name" className="ac-label">Full Name</label>
+                            <div className={"ac-input-wrap" + (error.Name ? " ac-input-error" : "")}>
                                 <i className="bi bi-person-fill"></i>
-                                <input type="text" 
+                                <input type="text"
+                                id="Name"
                                 name="Name"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="Fullname e.g Dr. John Adams" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
+                                value={formData.Name}
+                                onChange={handleChange}
+                                placeholder="e.g. Dr. John Adams" />
                             </div>
-                            {error.Name && <p className="text-danger mt-1">{error.Name[0]}</p>}
-
-                            <div className="mt-3">
-                                <Select
-                                    options={departmentOptions}
-                                    placeholder="Search Department..."
-                                    onChange={(selectedOption)=>{
-                                        console.log(selectedOption);
-                                        setFormData({
-                                            ...formData,
-                                            Department: selectedOption.value
-                                        });
-
-                                    }}
-                                />
-                            </div>
-                            {error.Department && <p className="text-danger mt-1">{error.Department[0]}</p>}
-
-                            <div className="input-group-custom position-relative">
-                                <button type='Submit' className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Add Lecturer</button>
-                                <i className="bi bi-arrow-right text-white position-absolute" style={{left: '66%', top: '68%'}}></i>
-                            </div>
+                            {error.Name && <p className="ac-error-text">{error.Name[0]}</p>}
                         </div>
+
+                        <div className="ac-field-group ac-select-wrap">
+                            <label className="ac-label">Department</label>
+                            <Select
+                                classNamePrefix="ac-select"
+                                styles={selectStyles}
+                                options={departmentOptions}
+                                placeholder="Search Department..."
+                                onChange={(selectedOption)=>{
+                                    console.log(selectedOption);
+                                    setFormData({
+                                        ...formData,
+                                        Department: selectedOption.value
+                                    });
+
+                                }}
+                            />
+                            {error.Department && <p className="ac-error-text">{error.Department[0]}</p>}
+                        </div>
+
+                        <button type="submit" className="ac-submit">
+                            Add Lecturer
+                            <i className="bi bi-arrow-right"></i>
+                        </button>
                     </form>
                 </div>
             </div>

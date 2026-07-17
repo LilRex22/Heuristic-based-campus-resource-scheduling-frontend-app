@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useState } from 'react';
 import axios from 'axios';
 import MessageBox from "../components/messageBox";
+import '../components/AddClassrooms.css';
 
 
 function AddClassrooms() {
@@ -94,8 +95,8 @@ function AddClassrooms() {
     };
 
     return (
-        <>
-            <Navbar expand="lg" className="bg-body-tertiary">
+        <div className="ac-shell">
+            <Navbar expand="lg" className="ac-navbar bg-body-tertiary">
                 <Container fluid>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
@@ -104,94 +105,110 @@ function AddClassrooms() {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Form className="d-flex position-relative">
-                                <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>
+                            <Form className="ac-search-form d-flex position-relative">
+                                <i className="bi bi-search position-absolute" style={{ left: '14px', top: '50%', transform: 'translateY(-50%)' }}></i>
                                 <Form.Control
                                 type="search"
-                                placeholder="Search Lecturers..."
-                                className=" me-2 border-0"
+                                placeholder="Search classrooms..."
+                                className="ac-search-input me-2 border-0"
                                 aria-label="Search"
-                                style={{backgroundColor: '#EDF0FF',borderRadius: '20px', width: '300px', paddingLeft: '35px'}}
                                 />
-                                <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
+                                <Button variant="outline-primary" className="ac-search-btn">Search</Button>
                             </Form>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>
+            </Navbar>           
 
-            <div className="p-3">
-                <h2 className='fw-bold'>Add a Classroom</h2>
-                    {message && (
-                        <MessageBox
-                            message={message.text}
-                            type={message.type}
-                            onClose={() => setMessage(null)}
-                        />
-                    )}
-                    <div className="d-flex flex-column align-items-center">
-                    <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
-                    <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>
+            <h2 className="ac-page-heading">Add a Classroom</h2>
 
-                    <form className="form-control p-4" onSubmit={handleSubmit} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
-                        <div className="">
-                            <div className="input-group-custom">
-                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Name:</label>
-                                <i className="bi bi-building-fill"></i>
-                                <input type="text" 
-                                name="Name"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="e.g. Room 101" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
-                            </div>
-                            {error.Name && <p className="text-danger mt-1">{error.Name[0]}</p>}
+            {message && (
+                <MessageBox
+                    message={message.text}
+                    type={message.type}
+                    onClose={() => setMessage(null)}
+                />
+            )}
 
-                            <div className="input-group-custom">
-                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Type:</label>
-                                <i className="bi bi-door-open-fill"></i>
-                                <input type="text" 
-                                name="Type"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="e.g. Lecture Hall" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
-                            </div>
-                            {error.Type && <p className="text-danger mt-1">{error.Type[0]}</p>}
-                            
-                            <div className="input-group-custom">
-                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Capacity:</label>
-                                <i className="bi bi-person-fill"></i>
-                                <input type="number" 
-                                name="Capacity"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="e.g. 200" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
-                            </div>
-                            {error.Capacity && <p className="text-danger mt-1">{error.Capacity[0]}</p>}
-
-                            <div className="input-group-custom">
-                                <label htmlFor="Name" className="mt-4 fw-bold text-black-50">Location:</label>
-                                <i className="bi bi-geo-alt-fill"></i>
-                                <input type="text" 
-                                name="Location"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="e.g. Science Block" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
-                            </div>
-                            {error.Location && <p className="text-danger mt-1">{error.Location[0]}</p>}
-
-                            <div className="input-group-custom position-relative">
-                                <button type='Submit' className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Add Classroom</button>
-                                <i className="bi bi-arrow-right text-white position-absolute" style={{left: '66%', top: '68%'}}></i>
-                            </div>
-                        </div>
-                    </form>
+            <div className="ac-body">
+                <div className="ac-brand-mark">
+                    <i className="bi bi-mortarboard-fill"></i>
                 </div>
+                <h1 className="ac-brand-name"><span className="ac-brand-accent">Smart</span> Slot</h1>
+                <p className="ac-brand-sub">Register a new room for scheduling</p>
+
+                <form className="ac-card" onSubmit={handleSubmit}>
+                    <div className="ac-field-group">
+                        <label htmlFor="Name" className="ac-label">Name</label>
+                        <div className={"ac-input-wrap" + (error.Name ? " ac-input-error" : "")}>
+                            <i className="bi bi-building-fill"></i>
+                            <input
+                                type="text"
+                                id="Name"
+                                name="Name"
+                                value={formData.Name}
+                                onChange={handleChange}
+                                placeholder="e.g. Room 101"
+                            />
+                        </div>
+                        {error.Name && <p className="ac-error-text">{error.Name[0]}</p>}
+                    </div>
+
+                    <div className="ac-field-group">
+                        <label htmlFor="Type" className="ac-label">Type</label>
+                        <div className={"ac-input-wrap" + (error.Type ? " ac-input-error" : "")}>
+                            <i className="bi bi-door-open-fill"></i>
+                            <input
+                                type="text"
+                                id="Type"
+                                name="Type"
+                                value={formData.Type}
+                                onChange={handleChange}
+                                placeholder="e.g. Lecture Hall"
+                            />
+                        </div>
+                        {error.Type && <p className="ac-error-text">{error.Type[0]}</p>}
+                    </div>
+
+                    <div className="ac-field-group">
+                        <label htmlFor="Capacity" className="ac-label">Capacity</label>
+                        <div className={"ac-input-wrap" + (error.Capacity ? " ac-input-error" : "")}>
+                            <i className="bi bi-person-fill"></i>
+                            <input
+                                type="number"
+                                id="Capacity"
+                                name="Capacity"
+                                value={formData.Capacity}
+                                onChange={handleChange}
+                                placeholder="e.g. 200"
+                            />
+                        </div>
+                        {error.Capacity && <p className="ac-error-text">{error.Capacity[0]}</p>}
+                    </div>
+
+                    <div className="ac-field-group">
+                        <label htmlFor="Location" className="ac-label">Location</label>
+                        <div className={"ac-input-wrap" + (error.Location ? " ac-input-error" : "")}>
+                            <i className="bi bi-geo-alt-fill"></i>
+                            <input
+                                type="text"
+                                id="Location"
+                                name="Location"
+                                value={formData.Location}
+                                onChange={handleChange}
+                                placeholder="e.g. Science Block"
+                            />
+                        </div>
+                        {error.Location && <p className="ac-error-text">{error.Location[0]}</p>}
+                    </div>
+
+                    <button type="submit" className="ac-submit">
+                        Add Classroom
+                        <i className="bi bi-arrow-right"></i>
+                    </button>
+                </form>
             </div>
-        </>
+        </div>
     );
 }
 

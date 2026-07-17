@@ -8,6 +8,39 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Select from "react-select";
 import MessageBox from "../components/messageBox";
+import '../components/AddClassrooms.css';
+
+// styling passed straight to react-select's `styles` prop so the dropdowns
+// match the brand (react-select can't be themed with plain CSS alone).
+// Purely presentational — none of the onChange logic changes.
+const selectStyles = {
+    control: (base, state) => ({
+        ...base,
+        borderColor: state.isFocused ? '#1b2340' : '#e7e2d6',
+        backgroundColor: '#faf8f3',
+        borderRadius: 10,
+        minHeight: 48,
+        boxShadow: 'none',
+        fontSize: '0.9rem',
+    }),
+    placeholder: (base) => ({ ...base, color: '#6b7280' }),
+    menu: (base) => ({
+        ...base,
+        borderRadius: 10,
+        overflow: 'hidden',
+        border: '1px solid #e7e2d6',
+        boxShadow: '0 8px 24px rgba(27,35,64,0.1)',
+    }),
+    option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isSelected
+            ? '#e8a33d'
+            : state.isFocused
+            ? '#fdf3e2'
+            : '#fff',
+        color: '#1b2340',
+    }),
+};
 
 function AddCourses() {
     const [room, setRoom] = useState([]);
@@ -162,162 +195,179 @@ function AddCourses() {
 
     return (
         <>
-            <Navbar expand="lg" className="bg-body-tertiary">
-                <Container fluid>
-                    <Navbar.Toggle aria-controls="navbarScroll" />
-                    <Navbar.Collapse id="navbarScroll">
-                        <Nav
-                            className="me-auto my-2 my-lg-0 w-100 d-flex justify-content-between"
-                            style={{ maxHeight: '100px' }}
-                            navbarScroll
-                        >
-                            <Form className="d-flex position-relative">
-                                <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>
-                                <Form.Control
-                                type="search"
-                                placeholder="Search Lecturers..."
-                                className=" me-2 border-0"
-                                aria-label="Search"
-                                style={{backgroundColor: '#EDF0FF',borderRadius: '20px', width: '300px', paddingLeft: '35px'}}
-                                />
-                                <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
-                            </Form>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            <div className="ac-shell">
+                <Navbar expand="lg" className="ac-navbar bg-body-tertiary">
+                    <Container fluid>
+                        <Navbar.Toggle aria-controls="navbarScroll" />
+                        <Navbar.Collapse id="navbarScroll">
+                            <Nav
+                                className="me-auto my-2 my-lg-0 w-100 d-flex justify-content-between"
+                                style={{ maxHeight: '100px' }}
+                                navbarScroll
+                            >
+                                <Form className="ac-search-form d-flex position-relative">
+                                    <i className="bi bi-search position-absolute" style={{ left: '14px', top: '50%', transform: 'translateY(-50%)' }}></i>
+                                    <Form.Control
+                                    type="search"
+                                    placeholder="Search Lecturers..."
+                                    className="ac-search-input me-2 border-0"
+                                    aria-label="Search"
+                                    />
+                                    <Button variant="outline-primary" className="ac-search-btn">Search</Button>
+                                </Form>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
 
-            <div className="p-3">
-                <h2 className='fw-bold'>Add a Course</h2>
-                    {message && (
-                        <MessageBox
-                            message={message.text}
-                            type={message.type}
-                            onClose={() => setMessage(null)}
-                        />
-                    )}
-                    <div className="d-flex flex-column align-items-center">
-                    <img width="64" height="64" src="https://img.icons8.com/glyph-neue/64/graduation-cap.png" alt="graduation-cap"/>
-                    <h1 className="fw-bold"><span style={{color: '#0059ba'}}>Smart</span> Slot</h1>
+                <h2 className='ac-page-heading'>Add a Course</h2>
 
-                    <form className="form-control p-4" onSubmit={handleSubmit} style={{width: '600px', borderRadius: '10px', backgroundColor: '#f8f9fa'}}>
-                        <div className="">
-                            {/* // Course code */}
-                            <div className="input-group-custom">
-                                <label htmlFor="Course_code" className="mt-4 fw-bold text-black-50">Course Code:</label>
-                                <i className="bi bi-person-fill"></i>
-                                <input type="text" 
+                {message && (
+                    <MessageBox
+                        message={message.text}
+                        type={message.type}
+                        onClose={() => setMessage(null)}
+                    />
+                )}
+
+                <div className="ac-body">
+                    <div className="ac-brand-mark">
+                        <i className="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h1 className="ac-brand-name"><span className="ac-brand-accent">Smart</span> Slot</h1>
+                    <p className="ac-brand-sub">Register a new course for scheduling</p>
+
+                    <form className="ac-card" onSubmit={handleSubmit}>
+                        {/* // Course code */}
+                        <div className="ac-field-group">
+                            <label htmlFor="Course_code" className="ac-label">Course Code</label>
+                            <div className={"ac-input-wrap" + (error.Course_code ? " ac-input-error" : "")}>
+                                <i className="bi bi-hash"></i>
+                                <input type="text"
+                                id="Course_code"
                                 name="Course_code"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="Course code e.g CSC 101" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
+                                value={formData.Course_code}
+                                onChange={handleChange}
+                                placeholder="e.g. CSC 101" />
                             </div>
-                            {error.Course_code && <p className="text-danger mt-1">{error.Course_code[0]}</p>}
+                            {error.Course_code && <p className="ac-error-text">{error.Course_code[0]}</p>}
+                        </div>
 
-
-                            {/* // Course title */}
-                            <div className="input-group-custom">
-                                <label htmlFor="Course_title" className="mt-4 fw-bold text-black-50">Course Title:</label>
-                                <i className="bi bi-person-fill"></i>
-                                <input type="text" 
+                        {/* // Course title */}
+                        <div className="ac-field-group">
+                            <label htmlFor="Course_title" className="ac-label">Course Title</label>
+                            <div className={"ac-input-wrap" + (error.Course_title ? " ac-input-error" : "")}>
+                                <i className="bi bi-journal-text"></i>
+                                <input type="text"
+                                id="Course_title"
                                 name="Course_title"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="Course Title e.g Introduction to Computer Science" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
+                                value={formData.Course_title}
+                                onChange={handleChange}
+                                placeholder="e.g. Introduction to Computer Science" />
                             </div>
-                            {error.Course_title && <p className="text-danger mt-1">{error.Course_title[0]}</p>}
+                            {error.Course_title && <p className="ac-error-text">{error.Course_title[0]}</p>}
+                        </div>
 
-                            {/* // Level */}
-                            <div className="mt-3">
-                                <Select
-                                    options={levelOptions}
-                                    placeholder="Select Level..."
-                                    onChange={(selectedOption)=>{
-                                        console.log(selectedOption);
-                                        setFormData({
-                                            ...formData,
-                                            Level: selectedOption.value
-                                        });
-                                    }}
-                                />
-                            </div>
-                            {error.Level && <p className="text-danger mt-1">{error.Level[0]}</p>}
+                        {/* // Level */}
+                        <div className="ac-field-group ac-select-wrap">
+                            <label className="ac-label">Level</label>
+                            <Select
+                                classNamePrefix="ac-select"
+                                styles={selectStyles}
+                                options={levelOptions}
+                                placeholder="Select Level..."
+                                onChange={(selectedOption)=>{
+                                    console.log(selectedOption);
+                                    setFormData({
+                                        ...formData,
+                                        Level: selectedOption.value
+                                    });
+                                }}
+                            />
+                            {error.Level && <p className="ac-error-text">{error.Level[0]}</p>}
+                        </div>
 
-                            {/* // Credit */}
-                            <div className="input-group-custom">
-                                <label htmlFor="Credit" className="mt-4 fw-bold text-black-50">Course Credit:</label>
-                                <i className="bi bi-person-fill"></i>
+                        {/* // Credit */}
+                        <div className="ac-field-group">
+                            <label htmlFor="Credit" className="ac-label">Course Credit</label>
+                            <div className={"ac-input-wrap" + (error.Credit ? " ac-input-error" : "")}>
+                                <i className="bi bi-award-fill"></i>
                                 <input type="number"
                                 min="1"
-                                step="1" 
+                                step="1"
+                                id="Credit"
                                 name="Credit"
+                                value={formData.Credit}
                                 onKeyDown={(e) => {
                                         if (["-", "+", "e", "E"].includes(e.key)) {
                                             e.preventDefault();
                                         }
                                     }}
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="Course Credit e.g 3" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
+                                onChange={handleChange}
+                                placeholder="e.g. 3" />
                             </div>
-                            {error.Credit && <p className="text-danger mt-1">{error.Credit[0]}</p>}
-
-                            {/* // Student */}  
-                            <div className="input-group-custom">
-                                <label htmlFor="Student" className="mt-4 fw-bold text-black-50">No. of Students:</label>
-                                <i className="bi bi-person-fill"></i>
-                                <input type="text" 
-                                name="Student"
-                                onChange={handleChange} 
-                                className="form-control mt-2 text-black-50 fw-bold" 
-                                placeholder="No. of Students e.g 300" 
-                                style={{backgroundColor: '#d3e4fe'}}/>
-                            </div>
-                            {error.Student && <p className="text-danger mt-1">{error.Student[0]}</p>}
-
-
-                            {/* // Lecturer */}
-                            <div className="mt-3">
-                                <Select
-                                    options={lecturerOptions}
-                                    placeholder="Select Lecturer(s)..."
-                                    onChange={(selectedOption)=>{
-                                        console.log(selectedOption);
-                                        setFormData({
-                                            ...formData,
-                                            Lecturer: selectedOption.value
-                                        });
-
-                                    }}
-                                />
-                            </div>
-                            {error.Lecturer && <p className="text-danger mt-1">{error.Lecturer[0]}</p>}
-
-                            {/* // Room */}
-                            <div className="mt-3">
-                                <Select
-                                    options={roomOptions}
-                                    placeholder="Select Room..."
-                                    onChange={(selectedOption)=>{
-                                        console.log(selectedOption);
-                                        setFormData({
-                                            ...formData,
-                                            Room: selectedOption.value
-                                        });
-
-                                    }}
-                                />
-                            </div>
-                            {error.Room && <p className="text-danger mt-1">{error.Room[0]}</p>}
-
-                            <div className="input-group-custom position-relative">
-                                <button type='Submit' className="btn btn-primary mt-4 fw-bold form-control" style={{backgroundColor: '#0059ba'}}>Add Course</button>
-                                <i className="bi bi-arrow-right text-white position-absolute" style={{left: '66%', top: '68%'}}></i>
-                            </div>
+                            {error.Credit && <p className="ac-error-text">{error.Credit[0]}</p>}
                         </div>
+
+                        {/* // Student */}
+                        <div className="ac-field-group">
+                            <label htmlFor="Student" className="ac-label">No. of Students</label>
+                            <div className={"ac-input-wrap" + (error.Student ? " ac-input-error" : "")}>
+                                <i className="bi bi-people-fill"></i>
+                                <input type="text"
+                                id="Student"
+                                name="Student"
+                                value={formData.Student}
+                                onChange={handleChange}
+                                placeholder="e.g. 300" />
+                            </div>
+                            {error.Student && <p className="ac-error-text">{error.Student[0]}</p>}
+                        </div>
+
+                        {/* // Lecturer */}
+                        <div className="ac-field-group ac-select-wrap">
+                            <label className="ac-label">Lecturer</label>
+                            <Select
+                                classNamePrefix="ac-select"
+                                styles={selectStyles}
+                                options={lecturerOptions}
+                                placeholder="Select Lecturer(s)..."
+                                onChange={(selectedOption)=>{
+                                    console.log(selectedOption);
+                                    setFormData({
+                                        ...formData,
+                                        Lecturer: selectedOption.value
+                                    });
+
+                                }}
+                            />
+                            {error.Lecturer && <p className="ac-error-text">{error.Lecturer[0]}</p>}
+                        </div>
+
+                        {/* // Room */}
+                        <div className="ac-field-group ac-select-wrap">
+                            <label className="ac-label">Room</label>
+                            <Select
+                                classNamePrefix="ac-select"
+                                styles={selectStyles}
+                                options={roomOptions}
+                                placeholder="Select Room..."
+                                onChange={(selectedOption)=>{
+                                    console.log(selectedOption);
+                                    setFormData({
+                                        ...formData,
+                                        Room: selectedOption.value
+                                    });
+
+                                }}
+                            />
+                            {error.Room && <p className="ac-error-text">{error.Room[0]}</p>}
+                        </div>
+
+                        <button type="submit" className="ac-submit">
+                            Add Course
+                            <i className="bi bi-arrow-right"></i>
+                        </button>
                     </form>
                 </div>
             </div>

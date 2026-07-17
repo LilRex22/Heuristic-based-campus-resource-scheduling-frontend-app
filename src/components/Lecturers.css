@@ -1,0 +1,251 @@
+/* Smart Slot — Lecturers
+   Same token set as Dashboard.css / SignUp.css.
+   ---------------------------------------------------- */
+
+.lec-shell {
+    --ink: #1b2340;
+    --ink-soft: #2a3358;
+    --paper: #faf8f3;
+    --paper-line: #e7e2d6;
+    --accent: #e8a33d;
+    --accent-tint: #fdf3e2;
+    --accent-deep: #c97f1e;
+    --slate: #6b7280;
+    --white: #ffffff;
+    --success: #2f9e68;
+    --success-tint: #e5f5ec;
+    --danger: #d64545;
+    --danger-tint: #fbeaea;
+
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    min-height: 100vh;
+    color: var(--ink);
+}
+
+.lec-shell h1,
+.lec-shell h3,
+.lec-shell h4 {
+    font-family: "Fraunces", Georgia, serif;
+}
+
+/* Top bar
+   ---------------------------------------------------- */
+.lec-navbar.navbar {
+    background: var(--white) !important;
+    border-bottom: 1px solid var(--paper-line);
+    padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+}
+
+.lec-search-form {
+    position: relative;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.lec-search-form .bi-search {
+    color: var(--slate);
+    font-size: 0.9rem;
+    z-index: 2;
+}
+
+.lec-search-input.form-control {
+    background: var(--paper) !important;
+    border: 1px solid var(--paper-line) !important;
+    border-radius: 999px !important;
+    width: 300px;
+    padding-left: 2.2rem !important;
+    font-size: 0.9rem;
+}
+
+.lec-search-input.form-control:focus {
+    border-color: var(--ink) !important;
+    box-shadow: 0 0 0 3px rgba(27, 35, 64, 0.08) !important;
+}
+
+.lec-search-btn.btn {
+    border-radius: 999px !important;
+    background: var(--ink) !important;
+    border: none !important;
+    color: var(--white) !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 1.1rem;
+}
+
+.lec-search-btn.btn:hover {
+    background: var(--ink-soft) !important;
+}
+
+.lec-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent) !important;
+    color: var(--ink) !important;
+    border-radius: 999px !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem !important;
+    border: none !important;
+}
+
+.lec-add-btn:hover {
+    background: #f0b45c !important;
+    color: var(--ink) !important;
+}
+
+/* Header row
+   ---------------------------------------------------- */
+.lec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.75rem clamp(1rem, 3vw, 2.5rem) 0;
+}
+
+.lec-header h1 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.lec-office-tag {
+    color: #727784;
+    background: #eaf1ff;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+}
+
+/* List
+   ---------------------------------------------------- */
+.lec-body {
+    padding: 1rem clamp(1rem, 3vw, 2.5rem) 3rem;
+}
+
+.lec-count {
+    color: var(--slate);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    margin: 0.5rem 0 0;
+}
+
+.lec-list-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.lec-card {
+    background: var(--white);
+    border: 1px solid var(--paper-line);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lec-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(27, 35, 64, 0.06);
+}
+
+.lec-card-main {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.lec-avatar {
+    display: grid;
+    place-items: center;
+    min-width: 68px;
+    height: 68px;
+    border-radius: 14px;
+    color: var(--white);
+}
+
+.lec-avatar h4 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.lec-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+}
+
+.lec-info p {
+    color: var(--slate);
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+.lec-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.lec-status {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.lec-status-chip {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.lec-status-chip.is-available {
+    background: var(--success-tint);
+    color: var(--success);
+}
+
+.lec-status-chip.is-unavailable {
+    background: var(--danger-tint);
+    color: var(--danger);
+}
+
+.lec-journal-icon {
+    color: var(--slate);
+    font-size: 1.4rem;
+}
+
+.lec-arrow {
+    color: var(--accent-deep);
+    font-size: 1.3rem;
+    margin-left: 1rem;
+}
+
+@media (max-width: 640px) {
+    .lec-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lec-card-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import '../components/Lecturers.css';
 
 
 function Lecturers(){
@@ -49,8 +50,8 @@ function Lecturers(){
     }, [location.pathname])
 
     return (
-        <>  
-            <Navbar expand="lg" className="bg-body-tertiary">
+        <div className="lec-shell">
+            <Navbar expand="lg" className="lec-navbar bg-body-tertiary">
                 <Container fluid>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
@@ -59,56 +60,56 @@ function Lecturers(){
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Form className="d-flex position-relative">
-                                <i className="bi bi-search position-absolute" style={{ left: '10px', top: '50%', transform: 'translateY(-50%)' }}></i>
+                            <Form className="lec-search-form d-flex position-relative">
+                                <i className="bi bi-search position-absolute" style={{ left: '14px', top: '50%', transform: 'translateY(-50%)' }}></i>
                                 <Form.Control
                                 type="search"
                                 placeholder="Search Lecturers..."
-                                className=" me-2 border-0"
+                                className="lec-search-input me-2 border-0"
                                 aria-label="Search"
-                                style={{backgroundColor: '#EDF0FF',borderRadius: '20px', width: '300px', paddingLeft: '35px'}}
                                 />
-                                <Button variant="outline-primary" style={{borderRadius: '20px', backgroundColor: '#4F8EF7', border: '0px', color: 'white'}}>Search</Button>
+                                <Button variant="outline-primary" className="lec-search-btn">Search</Button>
                             </Form>
 
-                            <Link to='./add' variant="outline-primary" className='text-decoration-none btn btn-secondary' style={{borderRadius: '20px', backgroundColor: '#0b1c30', border: '0px', color: 'white', marginLeft: '10px'}}>+ 
-                                <i className='bi bi-person-fill me-2 ms-1'></i>
+                            <Link to='./add' variant="outline-primary" className='lec-add-btn text-decoration-none btn btn-secondary'>
+                                <i className='bi bi-person-fill'></i>
                                 Add Lecturer
                             </Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <div className='d-flex justify-content-between align-items-center p-3'>
-                <h1 className='fw-bold'>Lecturers</h1>
-                <div className="text-muted fw-bold p-2 rounded-2" style={{backgroundColor: '#d3e4fe'}}>REGISTRAR OFFICE</div>
-            </div>
-            <div className="p-3">
-                <p className='text-muted fw-bold'>{allLecturers.length} TOTAL LECTURERS</p>
 
-                <Link className='text-decoration-none' style={{color: '#0b1c30'}}>
+            <div className='lec-header'>
+                <h1>Lecturers</h1>
+                <div className="lec-office-tag">REGISTRAR OFFICE</div>
+            </div>
+
+            <div className="lec-body">
+                <p className='lec-count'>{allLecturers.length} TOTAL LECTURERS</p>
+
+                <Link className='lec-list-link'>
                     {allLecturers.map((lecturer)=>{
+                        const isAvailable = String(lecturer.Available) == 'true';
                         return(
-                            <div className="mt-5 border shadow rounded-3 d-flex justify-content-between align-items-center bg-white p-4" style={{border: '1px solid rgba(11, 28, 48, 0.25)'}} key={lecturer.id}>
-                                <div className="d-flex align-items-center">
-                                    <div className="p-4 rounded-4 text-white text-center" style={{backgroundColor: randColor, minWidth: '100px'}}>
-                                        <h4 className='fw-bold fs-1'>{getInitials(lecturer.Name)}</h4>
+                            <div className="lec-card" key={lecturer.id}>
+                                <div className="lec-card-main">
+                                    <div className="lec-avatar" style={{backgroundColor: randColor}}>
+                                        <h4>{getInitials(lecturer.Name)}</h4>
                                     </div>
-                                    <div className="ms-4 d-flex flex-column">
-                                        <h3 className='fw-bold mb-2'>{lecturer.Name}</h3>
-                                        <p className='text-muted fw-bold'>{lecturer.department_Name}</p>
+                                    <div className="lec-info">
+                                        <h3>{lecturer.Name}</h3>
+                                        <p>{lecturer.department_Name}</p>
                                     </div>
                                 </div>
-                                <div className="">
-                                    <div className="d-flex align-items-center">
-                                        <div className="text-center d-flex align-items-center gap-3">
-                                            <div className="p-2 border rounded-2 h-50" style={{backgroundColor: String(lecturer.Available)=='true' ? 'rgb(127, 221, 127)' : '#ff7878'}}>
-                                                {String(lecturer.Available)=='true' ? <i className="bi bi-check-circle-fill text-success"></i> : <i className="bi bi-x-circle-fill text-danger"></i>}
-                                            </div>
-                                            <i className='bi bi-journal fs-1'></i>
-                                        </div>  
-                                        <i className='bi bi-arrow-right fs-2 ms-5'></i>
+                                <div className="lec-card-meta">
+                                    <div className="lec-status">
+                                        <div className={"lec-status-chip " + (isAvailable ? "is-available" : "is-unavailable")}>
+                                            {isAvailable ? <i className="bi bi-check-circle-fill"></i> : <i className="bi bi-x-circle-fill"></i>}
+                                        </div>
+                                        <i className='bi bi-journal lec-journal-icon'></i>
                                     </div>
+                                    <i className='bi bi-arrow-right lec-arrow'></i>
                                 </div>
                             </div>
                         )
@@ -116,8 +117,8 @@ function Lecturers(){
                     })}
                 </Link>
             </div>
-        </>
+        </div>
     )
 }
 
-export default Lecturers
+export default Lecturers;

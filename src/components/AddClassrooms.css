@@ -1,0 +1,212 @@
+/* Smart Slot — Add Classroom
+   Same token set as Dashboard.css / Lecturers.css / Schedule.css / SignUp.css.
+   ---------------------------------------------------- */
+.ac-shell {
+    --ink: #1b2340;
+    --ink-soft: #2a3358;
+    --paper: #faf8f3;
+    --paper-line: #e7e2d6;
+    --accent: #e8a33d;
+    --accent-tint: #fdf3e2;
+    --accent-deep: #c97f1e;
+    --slate: #6b7280;
+    --white: #ffffff;
+    --error: #d64545;
+
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    min-height: 100vh;
+    color: var(--ink);
+}
+
+.ac-shell h1,
+.ac-shell h2 {
+    font-family: "Fraunces", Georgia, serif;
+}
+
+/* Top bar
+   ---------------------------------------------------- */
+.ac-navbar.navbar {
+    background: var(--white) !important;
+    border-bottom: 1px solid var(--paper-line);
+    padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+}
+
+.ac-search-form {
+    position: relative;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.ac-search-form .bi-search {
+    color: var(--slate);
+    font-size: 0.9rem;
+    z-index: 2;
+}
+
+.ac-search-input.form-control {
+    background: var(--paper) !important;
+    border: 1px solid var(--paper-line) !important;
+    border-radius: 999px !important;
+    width: 300px;
+    padding-left: 2.2rem !important;
+    font-size: 0.9rem;
+}
+
+.ac-search-input.form-control:focus {
+    border-color: var(--ink) !important;
+    box-shadow: 0 0 0 3px rgba(27, 35, 64, 0.08) !important;
+}
+
+.ac-search-btn.btn {
+    border-radius: 999px !important;
+    background: var(--ink) !important;
+    border: none !important;
+    color: var(--white) !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 1.1rem;
+}
+
+.ac-search-btn.btn:hover {
+    background: var(--ink-soft) !important;
+}
+
+/* Page heading
+   ---------------------------------------------------- */
+.ac-page-heading {
+    padding: 1.75rem clamp(1rem, 3vw, 2.5rem) 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Form card
+   ---------------------------------------------------- */
+.ac-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1.5rem 4rem;
+}
+
+.ac-brand-mark {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 14px;
+    background: var(--ink);
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.ac-brand-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+}
+
+.ac-brand-name .ac-brand-accent {
+    color: var(--accent-deep);
+}
+
+.ac-brand-sub {
+    color: var(--slate);
+    font-size: 0.9rem;
+    margin: 0 0 1.75rem;
+}
+
+.ac-card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--white);
+    border: 1px solid var(--paper-line);
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.ac-field-group {
+    margin-bottom: 1.35rem;
+}
+
+.ac-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+}
+
+.ac-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--paper-line);
+    background: var(--paper);
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ac-input-wrap i {
+    color: var(--slate);
+    font-size: 0.95rem;
+}
+
+.ac-input-wrap input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: transparent;
+}
+
+.ac-input-wrap input::placeholder {
+    color: #9aa0ac;
+}
+
+.ac-input-wrap:focus-within {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(27, 35, 64, 0.08);
+}
+
+.ac-input-error {
+    border-color: var(--error);
+}
+
+.ac-input-error:focus-within {
+    box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.1);
+}
+
+.ac-error-text {
+    color: var(--error);
+    font-size: 0.8rem;
+    margin: 0.4rem 0 0;
+}
+
+.ac-submit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.15s ease;
+}
+
+.ac-submit:hover {
+    background: var(--ink-soft);
+}

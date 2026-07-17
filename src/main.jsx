@@ -8,10 +8,10 @@ import './components/app.css';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard';
-import Lecturers from './pages/lecturers';
+import Lecturers from './pages/Lecturers';
 import Classrooms from './pages/classrooms';
 import Courses from './pages/courses';
-import Schedule from './pages/schedule';
+import Schedule from './pages/Schedule';
 import AddLecturers from './pages/add_lecturers';
 import DashboardLayout from './components/dashboardLayout';
 import AddClassrooms from './pages/add_classrooms';
@@ -27,9 +27,9 @@ function App() {
             {/* this is the whole page layout, the dashboard is excluded because it has its own layout (sidebar + navbar) */}
             <Route path='/' element={<Layout/>}>
               <Route index element={<Home />} />
-              <Route  path='login' element={<Login/> } />
-              <Route path='signup' element={<SignUp/>} />
             </Route>
+            <Route  path='login' element={<Login/> } />
+            <Route path='/signup' element={<SignUp/>} />
         
             {/* dashboard uses its own layout (sidebar + navbar) */}
             <Route path="dashboard" element={<DashboardLayout />}>

@@ -1,0 +1,302 @@
+/* Smart Slot — Schedule
+   Same token set as Dashboard.css / Lecturers.css / SignUp.css.
+   ---------------------------------------------------- */
+.sch-shell {
+    --ink: #1b2340;
+    --ink-soft: #2a3358;
+    --paper: #faf8f3;
+    --paper-line: #e7e2d6;
+    --accent: #e8a33d;
+    --accent-tint: #fdf3e2;
+    --accent-deep: #c97f1e;
+    --slate: #6b7280;
+    --white: #ffffff;
+    --success: #2f9e68;
+    --danger: #d64545;
+
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    min-height: 100vh;
+    color: var(--ink);
+}
+
+.sch-shell h1,
+.sch-shell h3,
+.sch-shell h5 {
+    font-family: "Fraunces", Georgia, serif;
+}
+
+/* Top bar
+   ---------------------------------------------------- */
+.sch-navbar.navbar {
+    background: var(--ink) !important;
+    padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+}
+
+.sch-brand-name {
+    color: var(--white) !important;
+    font-weight: 600;
+    margin: 0;
+}
+
+.sch-brand-name .sch-brand-accent {
+    color: var(--accent);
+}
+
+.sch-bell {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.sch-bell:hover {
+    color: var(--accent) !important;
+}
+
+.sch-avatar {
+    background: var(--accent) !important;
+    color: var(--ink) !important;
+}
+
+.sch-user-name {
+    color: var(--white) !important;
+    margin: 5px 0 0 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.sch-user-role {
+    color: rgba(255, 255, 255, 0.55) !important;
+    margin-top: 0px !important;
+    font-size: 0.78rem;
+}
+
+/* Header
+   ---------------------------------------------------- */
+.sch-page-header {
+    padding: clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) 0;
+}
+
+.sch-page-header h1 {
+    font-size: 1.85rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+}
+
+.sch-page-subtitle {
+    color: var(--slate);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+}
+
+.sch-info-chip {
+    background: var(--white);
+    border: 1px solid var(--paper-line);
+    border-radius: 12px;
+    padding: 0.85rem 1.1rem;
+}
+
+.sch-info-chip small {
+    color: var(--slate);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+}
+
+.sch-info-chip p {
+    color: var(--ink);
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+}
+
+.sch-info-chip i {
+    color: var(--accent-deep);
+}
+
+/* Stepper
+   ---------------------------------------------------- */
+.sch-stepper {
+    padding: 0 clamp(1rem, 3vw, 2.5rem);
+    margin-top: 2.5rem;
+}
+
+.sch-step-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.sch-step-circle {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+}
+
+.sch-step-name {
+    font-weight: 700;
+    margin: 0;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.sch-step-line {
+    height: 2px;
+    flex: 1;
+    border-radius: 2px;
+    transition: background 0.2s ease;
+}
+
+.sch-step-desc {
+    font-size: 0.83rem;
+    line-height: 1.55;
+    margin: 0.85rem 0 0;
+    padding-right: 1rem;
+}
+
+/* Section cards
+   ---------------------------------------------------- */
+.sch-content {
+    padding: 0 clamp(1rem, 3vw, 2.5rem) 3rem;
+}
+
+.sch-card {
+    background: var(--white);
+    border: 1px solid var(--paper-line);
+    border-radius: 16px;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.sch-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.sch-card-header h3 {
+    color: var(--ink) !important;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.sch-select-wrap {
+    min-width: 240px;
+    flex: 1;
+}
+
+/* Table
+   ---------------------------------------------------- */
+.sch-table-wrap {
+    margin-top: 1.25rem;
+    overflow-x: auto;
+}
+
+.sch-table.table {
+    margin-bottom: 0;
+}
+
+.sch-table thead th {
+    color: var(--slate) !important;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--paper-line) !important;
+    padding-bottom: 0.75rem;
+}
+
+.sch-table tbody td {
+    border-color: var(--paper-line) !important;
+    font-size: 0.9rem;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.sch-table tbody tr:hover {
+    background: var(--accent-tint);
+}
+
+.sch-remove-btn {
+    border-radius: 8px !important;
+}
+
+/* Generate button
+   ---------------------------------------------------- */
+.sch-generate-wrap {
+    background: var(--ink) !important;
+    background-image: radial-gradient(
+        circle at 85% 0%,
+        var(--ink-soft) 0%,
+        var(--ink) 60%
+    ) !important;
+    border-radius: 16px;
+    padding: 2rem !important;
+    border: none !important;
+}
+
+.sch-generate-btn {
+    background: var(--accent) !important;
+    border: none !important;
+    color: var(--ink) !important;
+    border-radius: 10px !important;
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem;
+}
+
+.sch-generate-btn:hover {
+    background: #f0b45c !important;
+}
+
+/* react-select overrides via classNamePrefix="sch-select"
+   ---------------------------------------------------- */
+.sch-select__control {
+    border-color: var(--paper-line) !important;
+    border-radius: 10px !important;
+    min-height: 44px !important;
+    box-shadow: none !important;
+}
+
+.sch-select__control--is-focused {
+    border-color: var(--ink) !important;
+    box-shadow: 0 0 0 3px rgba(27, 35, 64, 0.08) !important;
+}
+
+.sch-select__menu {
+    border-radius: 10px !important;
+    overflow: hidden;
+    border: 1px solid var(--paper-line) !important;
+    box-shadow: 0 8px 24px rgba(27, 35, 64, 0.1) !important;
+}
+
+.sch-select__option--is-focused {
+    background: var(--accent-tint) !important;
+    color: var(--ink) !important;
+}
+
+.sch-select__option--is-selected {
+    background: var(--accent) !important;
+    color: var(--ink) !important;
+}
+
+.sch-select__placeholder {
+    color: var(--slate) !important;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 991px) {
+    .sch-step-line {
+        display: none;
+    }
+}

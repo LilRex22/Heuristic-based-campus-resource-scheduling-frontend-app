@@ -1,0 +1,392 @@
+/* Dashboard Styles - Smart Slot Theme */
+.dashboard-shell {
+    --ink: #1b2340;
+    --ink-soft: #2a3358;
+    --paper: #faf8f3;
+    --paper-line: #e7e2d6;
+    --accent: #e8a33d;
+    --accent-deep: #c97f1e;
+    --slate: #6b7280;
+    --error: #d64545;
+    --white: #ffffff;
+
+    min-height: 100vh;
+    background: var(--paper);
+    padding: 2rem;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-shell * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Welcome Header */
+.dashboard-welcome {
+    margin-bottom: 2rem;
+}
+
+.dashboard-welcome h1 {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-welcome p {
+    color: var(--slate);
+    font-size: 1rem;
+}
+
+/* Hero Section */
+.dashboard-hero {
+    background: var(--ink);
+    background-image: radial-gradient(
+        circle at 15% 10%,
+        var(--ink-soft) 0%,
+        var(--ink) 55%
+    );
+    color: var(--white);
+    padding: 3.5rem 4rem;
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-hero-content {
+    max-width: 70%;
+    position: relative;
+    z-index: 2;
+}
+
+.dashboard-hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-hero h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 3.2rem;
+    font-weight: 560;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.01em;
+}
+
+.dashboard-hero p {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 45ch;
+    margin-bottom: 2rem;
+}
+
+.dashboard-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: var(--ink);
+    padding: 0.85rem 2.2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.dashboard-hero-btn:hover {
+    background: var(--accent-deep);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+/* Hero Decorative Grid */
+.dashboard-hero-grid {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    width: 200px;
+    z-index: 1;
+}
+
+.dashboard-hero-grid .cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    transition: 0.5s;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.dashboard-hero-grid .cell-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    animation: hero-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes hero-pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(232, 163, 61, 0.45);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(232, 163, 61, 0);
+    }
+}
+
+/* Stats Cards */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+.dashboard-stat-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--paper-line);
+    transition: all 0.2s ease;
+}
+
+.dashboard-stat-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+.dashboard-stat-icon {
+    display: inline-flex;
+    padding: 0.6rem;
+    border-radius: 8px;
+    background: #d7e2ff;
+    margin-bottom: 0.8rem;
+}
+
+.dashboard-stat-icon i {
+    color: #0b1c30;
+    font-size: 1.2rem;
+}
+
+.dashboard-stat-label {
+    color: var(--slate);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.3rem;
+}
+
+.dashboard-stat-value {
+    color: var(--ink);
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Workflow Section */
+.dashboard-workflow {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--paper-line);
+}
+
+.dashboard-workflow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.dashboard-workflow-header h2 {
+    font-family: "Fraunces", Georgia, serif;
+    color: var(--ink);
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.dashboard-workflow-header p {
+    color: var(--slate);
+    margin: 0;
+}
+
+.dashboard-workflow-badge {
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    background: #d7e2ff;
+    color: #0b1c30;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.dashboard-workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.dashboard-workflow-item {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.dashboard-workflow-item:not(:last-child) {
+    border-right: 1px solid var(--paper-line);
+}
+
+.dashboard-workflow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem;
+}
+
+.dashboard-workflow-icon img {
+    width: 32px;
+    height: 32px;
+}
+
+.dashboard-workflow-step {
+    color: #0b1c30;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-workflow-title {
+    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-workflow-text {
+    color: var(--slate);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Footer Sections */
+.dashboard-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.dashboard-footer-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--paper-line);
+}
+
+.dashboard-footer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-footer-card-header h3 {
+    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.dashboard-footer-card-header h3 i {
+    color: var(--accent);
+    margin-right: 0.5rem;
+}
+
+.dashboard-footer-link {
+    color: var(--accent-deep);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.15s ease;
+}
+
+.dashboard-footer-link:hover {
+    color: var(--accent-deep);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .dashboard-hero-content {
+        max-width: 100%;
+    }
+    
+    .dashboard-hero-grid {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-shell {
+        padding: 1rem;
+    }
+    
+    .dashboard-hero {
+        padding: 2rem 1.5rem;
+    }
+    
+    .dashboard-hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .dashboard-workflow-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .dashboard-workflow-item:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid var(--paper-line);
+        padding-bottom: 1.5rem;
+    }
+    
+    .dashboard-workflow-item:last-child {
+        padding-bottom: 0;
+    }
+    
+    .dashboard-footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .dashboard-hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .dashboard-hero-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
