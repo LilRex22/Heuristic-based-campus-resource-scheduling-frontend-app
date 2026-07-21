@@ -10,6 +10,7 @@ function Sidebar() {
     { label: 'Home', path: '/', icon: 'bi-house-fill' },
     { label: 'Dashboard', path: '/dashboard', icon: 'bi-bar-chart-line-fill' },
     { label: 'Lecturers', path: '/dashboard/lecturers', icon: 'bi-person-badge-fill' },
+    { label: 'Timeslots', path: '/dashboard/timeslots', icon: 'bi-clock-history' },
     { label: 'Classrooms', path: '/dashboard/classrooms', icon: 'bi-building' },
     { label: 'Courses', path: '/dashboard/courses', icon: 'bi-journal-bookmark-fill' },
     { label: 'Schedule', path: '/dashboard/schedule', icon: 'bi-calendar-event' },

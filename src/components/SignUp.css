@@ -65,14 +65,14 @@
 }
 
 .ss-brand-name {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Inter", Georgia, serif;
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 0.01em;
 }
 
 .ss-headline {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Inter", Georgia, serif;
     font-weight: 560;
     font-size: 2.5rem;
     line-height: 1.15;
@@ -163,7 +163,7 @@
 }
 
 .ss-form-header h2 {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Inter", Georgia, serif;
     font-size: 1.7rem;
     font-weight: 600;
     color: var(--ink);

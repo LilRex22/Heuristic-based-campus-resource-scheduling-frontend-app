@@ -1,8 +1,4 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -46,6 +42,8 @@ function AddLecturers() {
     const [departments, setDepartments] = useState([]);
     const [error, setError] = useState({});
     const [message, setMessage] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+
 
     const [formData, setFormData] = useState({
         Name: "",
@@ -75,7 +73,7 @@ function AddLecturers() {
             });
             return;
         }
-
+        setSubmitting(true);
         try{
             console.log(formData)
             const token = localStorage.getItem("access");
@@ -106,6 +104,8 @@ function AddLecturers() {
                 text: err.response.data.Name || "An error occurred while adding the lecturer.",
                 type: "error"
             });
+        }finally{
+            setSubmitting(false);
         }
         
     };
@@ -132,30 +132,6 @@ function AddLecturers() {
     return (
         <>
             <div className="ac-shell">
-                <Navbar expand="lg" className="ac-navbar bg-body-tertiary">
-                    <Container fluid>
-                        <Navbar.Toggle aria-controls="navbarScroll" />
-                        <Navbar.Collapse id="navbarScroll">
-                            <Nav
-                                className="me-auto my-2 my-lg-0 w-100 d-flex justify-content-between"
-                                style={{ maxHeight: '100px' }}
-                                navbarScroll
-                            >
-                                <Form className="ac-search-form d-flex position-relative">
-                                    <i className="bi bi-search position-absolute" style={{ left: '14px', top: '50%', transform: 'translateY(-50%)' }}></i>
-                                    <Form.Control
-                                    type="search"
-                                    placeholder="Search Lecturers..."
-                                    className="ac-search-input me-2 border-0"
-                                    aria-label="Search"
-                                    />
-                                    <Button variant="outline-primary" className="ac-search-btn">Search</Button>
-                                </Form>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-
                 <h2 className='ac-page-heading'>Add a Lecturer</h2>
 
                 {message && (
@@ -207,8 +183,8 @@ function AddLecturers() {
                             {error.Department && <p className="ac-error-text">{error.Department[0]}</p>}
                         </div>
 
-                        <button type="submit" className="ac-submit">
-                            Add Lecturer
+                        <button type="submit" className="ac-submit" disabled={submitting}>
+                            {submitting ? "Adding Lecturer…" : "Add Lecturer"}
                             <i className="bi bi-arrow-right"></i>
                         </button>
                     </form>

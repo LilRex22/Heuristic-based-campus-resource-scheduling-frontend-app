@@ -8,14 +8,16 @@ import './components/app.css';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard';
-import Lecturers from './pages/Lecturers';
+import Lecturers from './pages/lecturers';
 import Classrooms from './pages/classrooms';
 import Courses from './pages/courses';
-import Schedule from './pages/Schedule';
+import Schedule from './pages/schedule';
 import AddLecturers from './pages/add_lecturers';
 import DashboardLayout from './components/dashboardLayout';
 import AddClassrooms from './pages/add_classrooms';
 import AddCourses from './pages/add_courses';
+import Timeslots from './pages/timeslots';
+import AddTimeslots from './pages/add_timeslots';
 // our custom css file
 
 
@@ -37,10 +39,12 @@ function App() {
               <Route path='lecturers' element={<Lecturers />} />
               <Route path='lecturers/add' element={<AddLecturers />}/>
               <Route path='classrooms/add' element={<AddClassrooms />}/>
+              <Route path='timeslots/add' element={<AddTimeslots />}/>
               <Route path='courses/add' element={<AddCourses />}/>
               <Route path='classrooms' element={<Classrooms />} />
               <Route path='courses' element={<Courses />} />
               <Route path='schedule' element={<Schedule />} />
+              <Route path='timeslots' element={<Timeslots />} />
             </Route>
 
         </Routes>

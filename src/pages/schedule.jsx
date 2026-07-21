@@ -1,8 +1,6 @@
-
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-// import Button from 'react-bootstrap/Button';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -57,7 +55,7 @@ function Schedule() {
     const [availableTimeslots, setAvailableTimeslots] = useState([])
     const [selectedTimeslots, setSelectedTimeslots] = useState([])
 
-    // convert the available objects to a list acceptable by the react-select component 
+    // convert the available objects to a list acceptable by the react-select component
     const options = availableCourses.map((course)=>({ value: course.id, label: course.Course_code}));
 
     const optionsLecturers = availableLecturers.map((lecturer)=>({ value: lecturer.id, label: lecturer.Name, dept: lecturer.Department, avail: lecturer.Available }));
@@ -66,7 +64,40 @@ function Schedule() {
 
     const optionsTimeslots = availableTimeslots.map((timeslot)=>({ value: timeslot.id, label: `${timeslot.Day}: ${timeslot.Start_time} - ${timeslot.End_time}`, start: timeslot.Start_time, end: timeslot.End_time, duration: timeslot.Duration}))
 
-    
+    // schedule generation logic
+    const [scheduleResult, setScheduleResult] = useState(null);
+    const [generating, setGenerating] = useState(false);
+    // FIX: there was previously no way to show the user that generation
+    // failed — errors only went to console.error. Now they see it.
+    const [generateError, setGenerateError] = useState(null);
+
+    const handleGenerate = async () => {
+        markVisited('pg5');
+        setGenerating(true);
+        setGenerateError(null);
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/generate-schedule/', {
+                    course_ids: selectedCourses.map(c => c.id),
+                    lecturer_ids: selectedLecturers.map(l => l.id),
+                    classroom_ids: selectedClassrooms.map(c => c.id),
+                    timeslot_ids: selectedTimeslots.map(t => t.id),
+                } );
+            // FIX: setScheduleResult(response.data) then immediately console.log(scheduleResult)
+            // logged the *previous* value, since setState is async — logging
+            // response.data directly instead if you need to inspect it.
+            setScheduleResult(response.data); // { assignments: [...], conflicts: [...], stats: {...} }
+        } catch (error) {
+            console.error('Error generating schedule:', error);
+            setGenerateError(
+                error.response?.data?.error ||
+                'Something went wrong while generating the schedule. Please try again.'
+            );
+        } finally {
+            setGenerating(false);
+        }
+    };
+
     // for selecting courses
     const handleCourseSelect = (selectedOption) => {
       if (!selectedOption) return; // cleared or nothing selected
@@ -133,7 +164,7 @@ function Schedule() {
         setSelectedClassrooms(prev =>
             prev.filter(classroom => classroom.id !== id)
         );
-    };  
+    };
 
 
     // for selecting timeslots
@@ -164,7 +195,6 @@ function Schedule() {
         const fetchCourses = async () => {
         try {
                 const response = await axios.get('http://localhost:8000/api/courses/');
-                console.log(response.data)
                 setAvailableCourses(response.data.courses);
             } catch (error) {
                 console.error('Error fetching courses:', error);
@@ -179,7 +209,6 @@ function Schedule() {
         const fetchLecturers = async () => {
         try {
                 const response = await axios.get('http://localhost:8000/api/lecturers/');
-                console.log(response.data)
                 setAvailableLecturers(response.data.all_lecturers);
             } catch (error) {
                 console.error('Error fetching lecturers:', error);
@@ -194,7 +223,6 @@ function Schedule() {
         const fetchTimeslots = async () => {
         try {
                 const response = await axios.get('http://localhost:8000/api/timeslots/');
-                console.log(response.data)
                 setAvailableTimeslots(response.data);
             } catch (error) {
                 console.error('Error fetching timeslots:', error);
@@ -202,14 +230,12 @@ function Schedule() {
         };
         fetchTimeslots();
     }, [location.pathname]);
-    console.log(availableTimeslots)
 
     // fetch the classrooms
     useEffect(() => {
         const fetchClassrooms = async () => {
             try {
                 const response = await axios.get('http://localhost:8000/api/classrooms/');
-                console.log(response.data)
                 setAvailableClassrooms(response.data.all_rooms);
             } catch (error) {
                 console.error('Error fetching classrooms:', error);
@@ -223,7 +249,6 @@ function Schedule() {
     const [visitedSteps, setVisitedSteps] = useState([]);
     const markVisited = (id) => {
         setVisitedSteps(prev => (prev.includes(id) ? prev : [...prev, id]));
-        console.log('step visited:', id)
     }
 
     const details = [
@@ -249,7 +274,7 @@ function Schedule() {
                                 <img width="36" height="36" src="https://img.icons8.com/badges/48/appointment-scheduling.png" alt="appointment-scheduling"/>
                                 <h5 className='mt-2 sch-brand-name'>Sche<span className='sch-brand-accent'>dule</span></h5>
                             </div>
-                            
+
                             <div className="d-flex gap-2 mt-1 me-3 align-items-center h-50">
                                 <Link className='sch-bell'>
                                     <i className='bi bi-bell fs-4 me-3'></i>
@@ -272,7 +297,7 @@ function Schedule() {
                         <h1>Schedule Data Setup</h1>
                         <p className='sch-page-subtitle'>ENTER AND MANAGE ALL DATA REQUIRED FOR TIMETABLE GENERATION.</p>
                     </div>
-                
+
                     <div className="col-lg-6 d-flex gap-2 justify-content-lg-end ">
                         <div className="sch-info-chip">
                             <small>Semester</small><br />
@@ -281,12 +306,12 @@ function Schedule() {
                                 First Semester 2025/2026
                             </p>
                         </div>
-                        
+
                         <div className="sch-info-chip">
                             <small>Department</small><br />
                             <p>
                                 <i className='bi bi-house-fill me-2'></i>
-                                {}
+                                All Departments
                             </p>
                         </div>
                     </div>
@@ -333,7 +358,6 @@ function Schedule() {
                                         classNamePrefix="sch-select"
                                         styles={selectStyles}
                                         onMenuOpen={() => markVisited('pg1')}
-                                        openMenuOnFocus={() => markVisited('pg1')}
                                         options={options}
                                         placeholder="Search and Select a Course"
                                         onChange={handleCourseSelect}
@@ -410,7 +434,6 @@ function Schedule() {
                                         classNamePrefix="sch-select"
                                         styles={selectStyles}
                                         onMenuOpen={() => markVisited('pg2')}
-                                        openMenuOnFocus={() => markVisited('pg2')}
                                         options={optionsLecturers}
                                         placeholder="Search and Select a Lecturer"
                                         onChange={handleLecturerSelect}
@@ -470,7 +493,6 @@ function Schedule() {
                                         classNamePrefix="sch-select"
                                         styles={selectStyles}
                                         onMenuOpen={() => markVisited('pg3')}
-                                        openMenuOnFocus={() => markVisited('pg3')}
                                         options={optionsClassrooms}
                                         placeholder="Search and Select a Classroom"
                                         onChange={handleClassroomSelect}
@@ -535,7 +557,6 @@ function Schedule() {
                                         classNamePrefix="sch-select"
                                         styles={selectStyles}
                                         onMenuOpen={() => markVisited('pg4')}
-                                        openMenuOnFocus={() => markVisited('pg4')}
                                         options={optionsTimeslots}
                                         placeholder="Search and Select a Classroom"
                                         onChange={handleTimeslotSelect}
@@ -570,7 +591,11 @@ function Schedule() {
                                                     <td>{timeslot.Day}</td>
                                                     <td>{timeslot.Start_time}</td>
                                                     <td>{String(timeslot.End_time)}</td>
-                                                    <td>{timeslot.Duration[1]} hr{'(s)'}</td>
+                                                    {/* FIX: was timeslot.Duration[1] — DurationField serializes to a
+                                                        string like "1:30:00", so [1] just grabbed a single character
+                                                        (e.g. ":") instead of an hour count. Displaying the raw
+                                                        duration string is correct and unambiguous. */}
+                                                    <td>{String(timeslot.Duration)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-sm btn-outline-danger sch-remove-btn"
@@ -591,11 +616,84 @@ function Schedule() {
 
                     <div className="col-12">
                         <div className="p-3 d-flex justify-content-center sch-generate-wrap">
-                            <button 
+                            <button
                             className='btn fw-bold sch-generate-btn'
-                            onClick={() => markVisited('pg5')}>Generate Schedule</button>
+                            onClick={handleGenerate} disabled={generating}>
+                                {generating ? 'Generating schedule...' : 'Generate schedule'}
+                            </button>
                         </div>
                     </div>
+
+                    {/* FIX: this whole section didn't exist before — the app called the
+                        generate endpoint and stored the result in state, but nothing ever
+                        rendered it, so clicking "Generate" appeared to do nothing. */}
+                    {generateError && (
+                        <div className="col-12">
+                            <div className="alert alert-danger">{generateError}</div>
+                        </div>
+                    )}
+
+                    {scheduleResult && (
+                        <div className="col-12">
+                            <div className="sch-card">
+                                <div className="sch-card-header">
+                                    <h3>Generated Schedule</h3>
+                                </div>
+
+                                {scheduleResult.stats && (
+                                    <div className="px-3 pb-2 d-flex gap-4">
+                                        <span>Total sessions: <strong>{scheduleResult.stats.total_sessions}</strong></span>
+                                        <span>Placed: <strong className="text-success">{scheduleResult.stats.placed}</strong></span>
+                                        <span>Unplaced: <strong className={scheduleResult.stats.unplaced > 0 ? 'text-danger' : ''}>{scheduleResult.stats.unplaced}</strong></span>
+                                    </div>
+                                )}
+
+                                <div className="sch-table-wrap">
+                                    <table className="table table-hover align-middle sch-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Course</th>
+                                                <th>Lecturer</th>
+                                                <th>Classroom</th>
+                                                <th>Timeslot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {(!scheduleResult.assignments || scheduleResult.assignments.length === 0) ? (
+                                                <tr>
+                                                    <td colSpan="4" className="text-center text-muted py-4">
+                                                        No assignments were generated
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                scheduleResult.assignments.map((a, i) => (
+                                                    <tr key={i}>
+                                                        <td>{a.course_code}</td>
+                                                        <td>{a.lecturer_name}</td>
+                                                        <td>{a.classroom_name}</td>
+                                                        <td>{a.timeslot_label}</td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {scheduleResult.conflicts && scheduleResult.conflicts.length > 0 && (
+                                    <div className="px-3 pb-3">
+                                        <h5 className="text-danger">Conflicts</h5>
+                                        <ul>
+                                            {scheduleResult.conflicts.map((c, i) => (
+                                                <li key={i}>
+                                                    <strong>{c.course_code}</strong>: {c.reason}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

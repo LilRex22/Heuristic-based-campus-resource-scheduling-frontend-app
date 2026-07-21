@@ -49,7 +49,7 @@ function Classrooms(){
                                 </Form>
 
                                 <Link to='./add' variant="outline-primary" className='lec-add-btn text-decoration-none btn btn-secondary'>
-                                    <i className='bi bi-person-fill'></i>
+                                    <i className='bi bi-house-fill'></i>
                                     Add Classroom
                                 </Link>
                             </Nav>
@@ -57,7 +57,7 @@ function Classrooms(){
                     </Container>
                 </Navbar>
 
-                <div className='lec-header' style={{color: '#0b1c30'}}>
+                <div className='lec-body' style={{color: '#0b1c30'}}>
                     <h1 className='fw-bold'>Classrooms</h1>
 
                     <p className='lec-count'>{allClassrooms.length} TOTAL CLASSROOMS</p>

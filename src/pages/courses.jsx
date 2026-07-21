@@ -58,7 +58,7 @@ function Courses(){
                                 </Form>
 
                                 <Link to='./add' variant="outline-primary" className='lec-add-btn text-decoration-none btn btn-secondary'>
-                                    <i className='bi bi-person-fill'></i>
+                                    <i className='bi-journal-bookmark-fill'></i>
                                     Add Course
                                 </Link>
                             </Nav>

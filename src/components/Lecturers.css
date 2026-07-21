@@ -20,13 +20,14 @@
     font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--paper);
     min-height: 100vh;
+    height: 100%;
     color: var(--ink);
 }
 
 .lec-shell h1,
 .lec-shell h3,
 .lec-shell h4 {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Inter", Georgia, serif;
 }
 
 /* Top bar
